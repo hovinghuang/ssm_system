@@ -13,6 +13,11 @@ public class PageController {
 		return "welcome";
 	}
 
+	@RequestMapping("userInfoPage")
+	public String userInfoPage() {
+		return "user-info";
+	}
+
 	@RequestMapping("index")
 	public String index() {
 		return "index";
