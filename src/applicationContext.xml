@@ -84,10 +84,10 @@
 	</bean>
 	
 	<!-- 添加事务管理器和事务注解扫描器 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/>
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
-    </bean>
+    </bean> -->
 	
 
 

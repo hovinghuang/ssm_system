@@ -40,13 +40,13 @@
 		</nav>
 		<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 			<ul class="cl">
-				<li>超级管理员</li>
+				<li>${subject.principal}</li>
 				<li class="dropDown dropDown_hover">
-					<a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+					<a href="#" class="dropDown_A"><i class="Hui-iconfont">&#xe6d5;</i></a>
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
-						<li><a href="#">切换账户</a></li>
-						<li><a href="#">退出</a></li>
+						<li><a href="doLogout">切换账户</a></li>
+						<li><a href="doLogout">退出</a></li>
 				</ul>
 			</li>
 				<!-- <li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li> -->
@@ -67,8 +67,9 @@
 			<dt><i class="Hui-iconfont">&#xe616;</i> 操作员及权限管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="listUser" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
-					<li><a data-href="article-list.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+					<li><a data-href="config/listUserPage" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
+					<li><a data-href="config/listRolePage" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+					<li><a data-href="config/listPermissionPage" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -119,7 +120,7 @@
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
 				<li class="active">
-					<span title="我的桌面" data-href="welcome.jsp">我的桌面</span>
+					<span title="我的桌面" data-href="welcome">我的桌面</span>
 					<em></em></li>
 		</ul>
 	</div>
@@ -128,7 +129,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display:none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="welcome.jsp"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="welcome"></iframe>
 	</div>
 </div>
 </section>
