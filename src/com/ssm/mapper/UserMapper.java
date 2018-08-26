@@ -23,4 +23,6 @@ public interface UserMapper {
 	int total();
 
 	List<User> searchUserByKey(String key);
+
+	User findUserByName(String name);
 }

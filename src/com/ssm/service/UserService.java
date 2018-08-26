@@ -22,4 +22,6 @@ public interface UserService {
 	public int total();
 
 	public List<User> searchUserByKey(String key);
+
+	public User findUserByName(String name);
 }

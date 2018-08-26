@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssm.mapper.RoleMapper;
 import com.ssm.mapper.UserRoleMapper;
@@ -49,16 +51,19 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void add(Role u) {
 		roleMapper.insert(u);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void delete(Long id) {
 		roleMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void update(Role u) {
 		roleMapper.updateByPrimaryKeySelective(u);
 	}

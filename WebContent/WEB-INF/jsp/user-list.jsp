@@ -165,13 +165,18 @@ function user_del(obj,id){
 			type: 'POST',
 			url: 'config/deleteUser?id='+ id,
 			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('删除成功!',{icon:1,time:1000});
+			success: function(data){//success指的是请求并成功返回信息
+				console.log(data.msg);
+				if(data.msg == 'success'){
+					$(obj).parents("tr").remove();
+					layer.msg('删除成功!',{icon:1,time:1000});
+				}else{
+					layer.msg('删除失败!',{icon:1,time:1000});
+				}
 			},
 			error:function(data) {
 				console.log(data.msg);
-				layer.msg('删除失败!',{icon:1,time:1000});
+				layer.msg('请求失败!',{icon:1,time:1000});
 			},
 		});		
 	});
@@ -196,11 +201,18 @@ function users_del(){
 				    "idArray": idArray,
 				  },
 				success: function(data){
-					layer.msg('删除成功!',{icon:1,time:1000});
-					setTimeout('window.location.reload()',300);
+					console.log(data.msg);
+					if(data.msg == 'success'){
+						layer.msg('删除成功!',{icon:1,time:1000});
+						setTimeout('window.location.reload()',300);
+					}else{
+						layer.msg('删除失败!',{icon:1,time:1000});
+						setTimeout('window.location.reload()',300);
+					}
 				},
 				error:function(data) {
-					layer.msg('删除失败!',{icon:1,time:1000});
+					console.log(data.msg);
+					layer.msg('请求失败!',{icon:1,time:1000});
 					setTimeout('window.location.reload()',300);
 				},
 			});		

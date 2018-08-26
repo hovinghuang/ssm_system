@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssm.mapper.PermissionMapper;
 import com.ssm.mapper.RolePermissionMapper;
@@ -54,16 +56,19 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void add(Permission u) {
 		permissionMapper.insert(u);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void delete(Long id) {
 		permissionMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void update(Permission u) {
 		permissionMapper.updateByPrimaryKeySelective(u);
 	}

@@ -79,15 +79,20 @@ $(function(){
 		        type : 'POST',
 		        data : $("#form-permission-edit").serialize(),
 		        url : "editPermission",//请求的action路径  
-		        error : function() {//请求失败处理函数  
-		            layer.msg('提交失败!请重新编辑',{icon:1,time:1000});
+		        dataType: 'json',
+				success:function(data) { //请求成功后处理函数。
+		        	console.log(data.msg);
+					if(data.msg == 'success'){
+						layer.msg('提交成功!',{icon:1,time:1000});
+						setTimeout('window.parent.location.reload()',300); //延迟0.3秒
+					}else{
+						layer.msg('提交失败!请检查，很可能是该用户名已经被占用。',{icon:1,time:2000});
+					}
 		        },
-		        success : function(data) { //请求成功后处理函数。    
-		            layer.msg('提交成功!',{icon:1,time:1000});
-					setTimeout('window.parent.location.reload()',300); //延迟0.3秒
-					/* window.parent.location.reload(); //刷新父页面*/
-					console.log("提交成功!");
-		        }
+		        error:function(data) {//请求失败处理函数  
+		        	console.log(data.msg);
+					layer.msg('请求失败!稍等请重新提交',{icon:1,time:1000});
+		        },
 		    });
 		}
 	});

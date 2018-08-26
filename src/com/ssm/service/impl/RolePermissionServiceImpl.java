@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssm.mapper.RolePermissionMapper;
 import com.ssm.pojo.Role;
@@ -18,6 +20,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	RolePermissionMapper rolePermissionMapper;
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void setPermissions(Role role, long[] permissionIds) {
 		// 删除当前角色所有的权限
 		RolePermissionExample example = new RolePermissionExample();
@@ -37,6 +40,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void deleteByRole(long roleId) {
 		RolePermissionExample example = new RolePermissionExample();
 		example.createCriteria().andRidEqualTo(roleId);
@@ -46,6 +50,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void deleteByPermission(long permissionId) {
 		RolePermissionExample example = new RolePermissionExample();
 		example.createCriteria().andPidEqualTo(permissionId);

@@ -143,14 +143,19 @@ function role_del(obj,id){
 			type: 'POST',
 			url: 'config/deleteRole?id='+ id,
 			dataType: 'json',
-			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('删除成功!',{icon:1,time:1000});
-			},
-			error:function(data) {
-				console.log(data.msg);
-				layer.msg('删除失败!',{icon:1,time:1000});
-			},
+			success:function(data) { //请求成功后处理函数。
+	        	console.log(data.msg);
+				if(data.msg == 'success'){
+					layer.msg('提交成功!',{icon:1,time:1000});
+					setTimeout('window.location.reload()',300); //延迟0.3秒
+				}else{
+					layer.msg('提交失败!请检查，很可能是该用户名已经被占用。',{icon:1,time:2000});
+				}
+	        },
+	        error:function(data) {//请求失败处理函数  
+	        	console.log(data.msg);
+				layer.msg('请求失败!稍等请重新提交',{icon:1,time:1000});
+	        },
 		});		
 	});
 }

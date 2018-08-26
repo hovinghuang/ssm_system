@@ -13,6 +13,9 @@
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="entrytime" jdbcType="VARCHAR" property="entrytime" />
   </resultMap>
+  <select id="findUserByName" parameterType="int" resultType="com.ssm.pojo.User">
+        SELECT * FROM t_user WHERE name = #{name}
+    </select>
   <select id="searchUserByKey" resultType="com.ssm.pojo.User"
         parameterType="com.ssm.pojo.User">
         SELECT * FROM t_user where id like CONCAT('%',#{key},'%')

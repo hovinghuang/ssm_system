@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssm.mapper.UserMapper;
 import com.ssm.pojo.User;
@@ -38,17 +40,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void add(User u) {
 		userMapper.insert(u);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void delete(Long id) {
 		userMapper.deleteByPrimaryKey(id);
 		userRoleService.deleteByUser(id);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackForClassName = "Exception")
 	public void update(User u) {
 		userMapper.updateByPrimaryKeySelective(u);
 	}
@@ -74,6 +79,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> searchUserByKey(String key) {
 		return userMapper.searchUserByKey(key);
+	}
+
+	@Override
+	public User findUserByName(String name) {
+		return userMapper.findUserByName(name);
 	}
 
 }

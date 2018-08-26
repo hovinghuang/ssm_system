@@ -53,12 +53,12 @@ public class PermissionController {
 			permissionService.update(permission);
 			// 向前端返回操作成功的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "success");
+			json.put("msg", "success");
 			return json.toJSONString();
 		} catch (Exception e) {
 			// 向前端返回操作失败的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "error");
+			json.put("msg", "error");
 			return json.toJSONString();
 		}
 	}
@@ -78,12 +78,12 @@ public class PermissionController {
 			permissionService.add(permission);
 			// 向前端返回操作成功的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "success");
+			json.put("msg", "success");
 			return json.toJSONString();
 		} catch (Exception e) {
 			// 向前端返回操作失败的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "error");
+			json.put("msg", "error");
 			return json.toJSONString();
 		}
 	}
@@ -96,12 +96,12 @@ public class PermissionController {
 			permissionService.delete(id);
 			// 向前端返回操作成功的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "success");
+			json.put("msg", "success");
 			return json.toJSONString();
 		} catch (Exception e) {
 			// 向前端返回操作失败的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "error");
+			json.put("msg", "error");
 			return json.toJSONString();
 		}
 	}

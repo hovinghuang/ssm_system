@@ -1,5 +1,6 @@
 package com.ssm.controller;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +44,7 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping("listUserTable")
-	public JSONObject listUserTable(String draw, String start, String length) {
+	public JSONObject listUserTable(String draw, String start, String length) throws SQLException {
 		int amount = userService.total();
 		List<User> us = userService.list();
 		// Map<String, String> user_roles = new HashMap<>();
@@ -66,19 +67,15 @@ public class UserController {
 		// System.out.println("返回数据json：" + json.toJSONString());
 		// 获取Action的上下文，就是action的一些运行信息，环境等等
 		int mydraw = 0, mystart = 0, mylength = 0, mypage = 0;
-		try {
-			// 获取前端的分页参数
-			mydraw = Integer.parseInt(draw);
-			mystart = Integer.parseInt(start);
-			mylength = Integer.parseInt(length);
-			mypage = (mystart / mylength) + 1;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("访问次数mydraw==" + mydraw);
-		System.out.println("起始下标mystart==" + mystart);
-		System.out.println("列表长度mylength==" + mylength);
-		System.out.println("当前页数mypage==" + mypage);
+		// 获取前端的分页参数
+		mydraw = Integer.parseInt(draw);
+		mystart = Integer.parseInt(start);
+		mylength = Integer.parseInt(length);
+		mypage = (mystart / mylength) + 1;
+		// System.out.println("访问次数mydraw==" + mydraw);
+		// System.out.println("起始下标mystart==" + mystart);
+		// System.out.println("列表长度mylength==" + mylength);
+		// System.out.println("当前页数mypage==" + mypage);
 
 		List<User> pageList = new ArrayList<User>();
 		int mylen = 0;
@@ -111,8 +108,8 @@ public class UserController {
 		List<Role> roles = roleService.listRoles(user);
 		model.addAttribute("currentRoles", roles);
 
-		System.out.println("rs==" + rs);
-		System.out.println("roles==" + roles);
+		// System.out.println("rs==" + rs);
+		// System.out.println("roles==" + roles);
 
 		return "user-edit";
 	}
@@ -140,12 +137,12 @@ public class UserController {
 			userService.update(user);
 			// 向前端返回操作成功的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "success");
+			json.put("msg", "success");
 			return json.toJSONString();
 		} catch (Exception e) {
 			// 向前端返回操作失败的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "error");
+			json.put("msg", "error");
 			return json.toJSONString();
 		}
 	}
@@ -158,12 +155,12 @@ public class UserController {
 			userService.delete(id);
 			// 向前端返回操作成功的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "success");
+			json.put("msg", "success");
 			return json.toJSONString();
 		} catch (Exception e) {
 			// 向前端返回操作失败的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "error");
+			json.put("msg", "error");
 			return json.toJSONString();
 		}
 	}
@@ -180,12 +177,12 @@ public class UserController {
 			}
 			// 向前端返回操作成功的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "success");
+			json.put("msg", "success");
 			return json.toJSONString();
 		} catch (Exception e) {
 			// 向前端返回操作失败的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "error");
+			json.put("msg", "error");
 			return json.toJSONString();
 		}
 	}
@@ -203,7 +200,6 @@ public class UserController {
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String dateNowStr = sdf.format(d);
-		System.out.println("格式化后的日期：" + dateNowStr);
 
 		String salt = new SecureRandomNumberGenerator().nextBytes().toString();
 		int times = 2;
@@ -222,12 +218,12 @@ public class UserController {
 			userService.add(user);
 			// 向前端返回操作成功的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "success");
+			json.put("msg", "success");
 			return json.toJSONString();
 		} catch (Exception e) {
 			// 向前端返回操作失败的json信息
 			JSONObject json = new JSONObject();
-			json.put("data", "error");
+			json.put("msg", "error");
 			return json.toJSONString();
 		}
 
@@ -241,7 +237,6 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("searchUserByKey")
 	public JSONObject searchUserByKey(String key) {
-		System.out.println("拿到的key：" + key);
 		List<User> us = userService.searchUserByKey(key);
 		for (User u : us) {
 			System.out.println("查找到的对象：" + u.getRealname());
