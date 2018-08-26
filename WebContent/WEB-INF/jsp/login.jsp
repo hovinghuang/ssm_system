@@ -19,25 +19,25 @@
 <div class="header"></div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
-    <div><p style="color:red">${error}</p></div>
+    <div class="text-c"><h4 class="c-red">${error}</h4></div>
     <form class="form form-horizontal" action="login" method="post">
       <div class="row cl">
-        <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
+        <label class="form-label col-xs-3"><img src="static/h-ui.admin/images/username.png"width="42" height="42"><!-- <i class="Hui-iconfont">&#xe60d;</i> --></label>
         <div class="formControls col-xs-8">
           <input id="username" name="username" type="text" placeholder="账户" class="input-text size-L">
         </div>
       </div>
       <div class="row cl">
-        <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
+        <label class="form-label col-xs-3"><img src="static/h-ui.admin/images/password.png"width="42" height="42"><!-- <i class="Hui-iconfont">&#xe60e;</i> --></label>
         <div class="formControls col-xs-8">
           <input id="password" name="password" type="password" placeholder="密码" class="input-text size-L">
         </div>
       </div>
-      <!-- <div class="row cl">
+      <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
           <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-          <img src=""> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
-      </div> -->
+          <img src=""> <a id="kanbuq" class="c-green" href="javascript:;">看不清，换一张</a> </div>
+      </div>
       <!-- <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
           <label for="online">
@@ -54,7 +54,7 @@
     </form>
   </div>
 </div>
-<div class="footer">Copyright 成都金融控股企业微信管理系统 by H-ui.admin</div>
+<div class="footer">Copyright by 成都金融控股企业微信管理系统</div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
 </body>
