@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -24,7 +25,7 @@
 <body>
 <header class="navbar-wrapper">
 	<div class="navbar navbar-fixed-top">
-		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">成都金融控股企业微信管理系统</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> 
+		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">成都金融控股企业微信管理系统</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> 
 			<!-- <span class="logo navbar-slogan f-l mr-10 hidden-xs">v3.1</span>  -->
 			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 			<nav class="nav navbar-nav">
@@ -45,7 +46,7 @@
 					<a href="#" class="dropDown_A">${subject.principal}<i class="Hui-iconfont">&#xe6d5;</i></a>
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" onClick="myselfinfo('个人信息','userInfoPage','550','530')">个人信息</a></li>
-						<!-- <li><a href="doLogout">切换账户</a></li> -->
+						<li><a href="javascript:;" onClick="password_edit('修改密码','passwordEditPage','550','330')">修改密码</a></li>
 						<li><a href="doLogout">退出</a></li>
 				</ul>
 			</li>
@@ -62,56 +63,89 @@
 </div>
 </header>
 <aside class="Hui-aside">
-	<div class="menu_dropdown bk_2">
-		<dl id="menu-article">
-			<dt><i class="Hui-iconfont">&#xe616;</i> 操作员及权限管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+
+       <c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="操作员及权限管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="<div class='menu_dropdown bk_2'>
+		<dl id='menu-article'>
+			<dt><i class='Hui-iconfont'>&#xe616;</i> 操作员及权限管理<i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="config/listUserPage" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
-					<li><a data-href="config/listRolePage" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-					<li><a data-href="config/listPermissionPage" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+					<li><a data-href='config/listUserPage' data-title='用户管理' href='javascript:void(0)'>用户管理</a></li>
+					<li><a data-href='config/listRolePage' data-title='角色管理' href='javascript:void(0)'>角色管理</a></li>
+					<li><a data-href='config/listPermissionPage' data-title='权限管理' href='javascript:void(0)'>权限管理</a></li>
+			</ul>
+		</dd>
+	</dl>" escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+       
+       
+       <c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="企业内容发布及管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="
+               <dl id='menu-picture'>
+			<dt><i class='Hui-iconfont'>&#xe613;</i> 企业内容发布及管理<i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
+			<dd>
+				<ul>
 			</ul>
 		</dd>
 	</dl>
-		<dl id="menu-picture">
-			<dt><i class="Hui-iconfont">&#xe613;</i> 企业内容发布及管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+               " escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+       
+       
+       <c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="企业相册管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="
+               <dl id='menu-product'>
+			<dt><i class='Hui-iconfont'>&#xe620;</i> 企业相册管理    <i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<!-- <li><a data-href="picture-list.html" data-title="图片管理" href="javascript:void(0)">图片管理</a></li> -->
+
 			</ul>
 		</dd>
 	</dl>
-		<dl id="menu-product">
-			<dt><i class="Hui-iconfont">&#xe620;</i> 企业相册管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+               " escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+       
+       
+       
+       <c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="学习考核管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="
+               <dl id='menu-comments'>
+			<dt><i class='Hui-iconfont'>&#xe622;</i> 学习考核管理<i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<!-- <li><a data-href="product-brand.html" data-title="品牌管理" href="javascript:void(0)">品牌管理</a></li>
-					<li><a data-href="product-category.html" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
-					<li><a data-href="product-list.html" data-title="产品管理" href="javascript:void(0)">产品管理</a></li> -->
 			</ul>
 		</dd>
 	</dl>
-		<dl id="menu-comments">
-			<dt><i class="Hui-iconfont">&#xe622;</i> 学习考核管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+               " escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+       
+       
+       <c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="系统管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="
+               <dl id='menu-system'>
+			<dt><i class='Hui-iconfont'>&#xe62e;</i> 系统管理<i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<!-- <li><a data-href="http://h-ui.duoshuo.com/admin/" data-title="评论列表" href="javascript:;">评论列表</a></li>
-					<li><a data-href="feedback-list.html" data-title="意见反馈" href="javascript:void(0)">意见反馈</a></li> -->
 			</ul>
 		</dd>
 	</dl>
-		<dl id="menu-system">
-			<dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-			<dd>
-				<ul>
-					<!-- <li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
-					<li><a data-href="system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
-					<li><a data-href="system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
-					<li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
-					<li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li> -->
-			</ul>
-		</dd>
-	</dl>
+               " escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
 </div>
 </aside>
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
@@ -144,7 +178,8 @@
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+<!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
@@ -166,6 +201,10 @@ $(function(){
 });
 /*个人信息*/
 function myselfinfo(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+/*修改密码*/
+function password_edit(title,url,w,h){
 	layer_show(title,url,w,h);
 }
 

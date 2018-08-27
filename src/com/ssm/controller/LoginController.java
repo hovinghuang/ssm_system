@@ -1,5 +1,8 @@
 package com.ssm.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +18,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ssm.pojo.Permission;
+import com.ssm.pojo.Role;
 import com.ssm.pojo.User;
+import com.ssm.service.PermissionService;
+import com.ssm.service.RolePermissionService;
+import com.ssm.service.RoleService;
 import com.ssm.service.UserService;
 
 @Controller
@@ -23,6 +31,12 @@ import com.ssm.service.UserService;
 public class LoginController {
 	@Autowired
 	UserService userService;
+	@Autowired
+	RoleService roleService;
+	@Autowired
+	RolePermissionService rolePermissionService;
+	@Autowired
+	PermissionService permissionService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, String username, String password, HttpServletRequest request,
@@ -31,6 +45,14 @@ public class LoginController {
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		String checkcode = request.getParameter("checkCode");
+
+		// 获取登录用户的权限
+		// Role userrole = roleService.get(user.getId());
+		// model.addAttribute("userrole", userrole);
+
+		// List<Permission> userps = permissionService.list();
+		// model.addAttribute("userps", userps);
+		// System.out.println("用户角色==" + userrole);
 		try {
 			// 先检查验证码
 			if (checkcode.equals("") || checkcode == null) {
@@ -52,6 +74,17 @@ public class LoginController {
 					session.setAttribute("userEmail", user.getEmail());
 					session.setAttribute("userAddress", user.getAddress());
 					session.setAttribute("userEntrytime", user.getEntrytime());
+					// 获取登录用户的角色
+					List<Role> userrole = roleService.listRoles(user);
+					// 获取登录用户的权限
+					List<Permission> userPermissions = new ArrayList<Permission>();
+					for (Role ur : userrole) {
+						userPermissions = permissionService.list(ur);
+					}
+
+					System.out.println("用户角色==" + userrole);
+
+					session.setAttribute("userPermissions", userPermissions);
 					return "redirect:index";
 				}
 			}

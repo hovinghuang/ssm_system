@@ -141,20 +141,6 @@ var table =$('.table-sort').dataTable({
         ]
 	});
 
-/*用户-查找*/
-function user_search(title,url,w,h){
-	layer_show(title,url,w,h);
-	/* var key = $("#key").val();
-	$.ajax({
-		type: 'POST',
-		url: 'config/searchUserByKey?key='+ key,
-		dataType: 'json',
-	});	 */
-}
-/*用户-添加*/
-function user_add(title,url,w,h){
-	layer_show(title,url,w,h);
-}
 /*用户-编辑*/
 function user_edit(title,url,id,w,h){
 	layer_show(title,url,w,h);

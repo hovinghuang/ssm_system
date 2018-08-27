@@ -26,7 +26,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
 <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
 <title>用户管理</title>
 </head>
@@ -37,12 +36,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
     -
     <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;"> -->
-    <input type="text" value="" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="key" name="key"><button type="submit" href="javascript:;" onclick="user_search('关键字查找用户','config/searchUserByKeyPage','1000','700')" class="btn btn-success" id="" name=""><i class="icon-search"></i> 搜用户</button>
+    <input type="text" value="" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="key" name="key"><button type="submit" href="javascript:;" onclick="user_search('关键字查找用户','config/searchUserByKeyPage','1000','700')" class="btn btn-success" id="sub" name=""><i class="icon-search"></i> 搜用户</button>
 
   </div>
   <div class="cl pd-5 bg-1 bk-gray mt-20">
     <span class="l"><a href="javascript:;" onclick="users_del()" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a>
-    <a href="javascript:;" onclick="user_add('添加用户','config/addUserPage','550','530')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加用户</a></span>
+    <a href="javascript:;" onclick="user_add('添加用户','config/addUserPage','550','550')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加用户</a></span>
     <span class="r">共有数据：<strong>${amount}</strong> 条</span>
   </div>
   <table class="table table-border table-bordered table-hover table-bg table-sort">
@@ -64,31 +63,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <tbody>
      </tbody>
   </table>
-<!--   <div id="pageNav" class="pageNav"></div> -->
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
 <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
 <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
-<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<!-- <script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>  -->
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 var table =$('.table-sort').dataTable({
-    "ordering": true,
+	"searching": false,
+	"bStateSave": false,//状态保存
     "bInfo": false,
-    "searching": false,
-	"bPaginate": true ,//开启分页功能，如果不开启，将会全部显示
     "iDisplayLength" : 10, //默认显示的记录数
 	"lengthChange": false, //是否允许用户自定义显示数量
-	/* "pagingType": "simple", */
 	"processing": true,
     "serverSide": true,
-	"aaSorting": [[1, "asc"]],
+	"aaSorting": [[1, "desc"]],
+	 "language": {
+		 "emptyTable":"没有数据", 
+		 "info":"展示 _START_ 到 _END_ ;总共  _TOTAL_ 条记录",
+		 "paginate": {
+		      "previous": "上一页",
+		      "next": "下一页",
+		      "last": "尾页"
+		    }
+		  },
 	"ajax": {
         "url": "config/listUserTable",
         "type": "POST",
@@ -132,7 +138,7 @@ var table =$('.table-sort').dataTable({
         	var e_url = "config/editUserPage?id="+ data;
         	var e_id = data;
         	var e_w = 550;  	
-        	var e_h = 550;
+        	var e_h = 570;
             return '<a title="编辑" href="javascript:;" onclick="user_edit('+'\''+e_title+'\''+','+'\''+e_url+'\''+','+'\''+e_id+'\''+','+'\''+e_w+'\''+','+'\''+e_h+'\''+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> '
             +'<a title="删除" href="javascript:;" onclick="user_del(this,'+data+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
         }
@@ -142,13 +148,12 @@ var table =$('.table-sort').dataTable({
 
 /*用户-查找*/
 function user_search(title,url,w,h){
-	layer_show(title,url,w,h);
-	/* var key = $("#key").val();
-	$.ajax({
-		type: 'POST',
-		url: 'config/searchUserByKey?key='+ key,
-		dataType: 'json',
-	});	 */
+	if(($('#key').val()=='')){
+        /* alert('输入不为空'); */
+        layer.msg('关键字不能为空!',{icon:1,time:1000});
+    }else{
+    	layer_show(title,url,w,h);
+    }
 }
 /*用户-添加*/
 function user_add(title,url,w,h){
@@ -190,7 +195,7 @@ function users_del(){
 		idArray[i] = checked[i].value;
 		console.log('ids[i]:'+idArray[i]);
 	}
-	if(idArray != null){
+	if(idArray != ''){
 		layer.confirm('确认要批量删除吗？',function(index){
 			$.ajax({
 				type: 'POST',

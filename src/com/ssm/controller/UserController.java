@@ -1,6 +1,5 @@
 package com.ssm.controller;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,7 +43,7 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping("listUserTable")
-	public JSONObject listUserTable(String draw, String start, String length) throws SQLException {
+	public JSONObject listUserTable(String draw, String start, String length) {
 		int amount = userService.total();
 		List<User> us = userService.list();
 		// Map<String, String> user_roles = new HashMap<>();
@@ -72,9 +71,9 @@ public class UserController {
 		mystart = Integer.parseInt(start);
 		mylength = Integer.parseInt(length);
 		mypage = (mystart / mylength) + 1;
-		// System.out.println("访问次数mydraw==" + mydraw);
-		// System.out.println("起始下标mystart==" + mystart);
-		// System.out.println("列表长度mylength==" + mylength);
+		System.out.println("访问次数mydraw==" + mydraw);
+		System.out.println("起始下标mystart==" + mystart);
+		System.out.println("列表长度mylength==" + mylength);
 		// System.out.println("当前页数mypage==" + mypage);
 
 		List<User> pageList = new ArrayList<User>();
@@ -89,9 +88,11 @@ public class UserController {
 		}
 		Map<String, Object> info = new HashMap<String, Object>();
 		info.put("data", pageList);
-		info.put("draw", draw);
-		info.put("start", start);
-		info.put("length", length);
+		info.put("draw", mydraw);
+		info.put("start", mystart);
+		info.put("length", mylength);
+		info.put("recordsTotal", amount);
+		info.put("recordsFiltered", amount);
 		String a = JSON.toJSONString(info);
 		JSONObject user_table = JSONObject.parseObject(a);
 		return user_table;

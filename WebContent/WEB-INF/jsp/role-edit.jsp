@@ -44,7 +44,7 @@
                             <c:set var="hasPermission" value="true" />
                         </c:if>
                     </c:forEach>
-                    <input type="checkbox"  ${hasPermission?"checked='checked'":"" } name="permissionIds" value="${p.id}"> ${p.name}<br>
+                    <input type="checkbox" ${hasPermission?"checked='checked'":"" } name="permissionIds" value="${p.id}"> ${p.name}<br>
                 </c:forEach>
             </div> 
             </td>
