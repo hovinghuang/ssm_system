@@ -81,7 +81,7 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public List<Permission> list() {
 		PermissionExample example = new PermissionExample();
-		example.setOrderByClause("id desc");
+		example.setOrderByClause("id asc");
 		return permissionMapper.selectByExample(example);
 
 	}

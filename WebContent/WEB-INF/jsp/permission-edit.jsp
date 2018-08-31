@@ -26,7 +26,7 @@
         <tbody>
           <tr>
             <input type="hidden" name="id" value="${permission.id}"/>
-            <th width="100" class="text-r"><span class="c-red">*</span> 权限名：</th>
+            <th width="100" class="text-r"><span class="c-red">*</span> 权限名称：</th>
             <td><input type="text" style="width:200px" class="input-text" value="${permission.name}" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="权限名不能为空"></td>
           </tr>
           <tr>
@@ -34,7 +34,7 @@
             <td><input type="text" style="width:200px" class="input-text" value="${permission.desc_}" placeholder="" id="desc_" name="desc_" datatype="*2-16" nullmsg="权限描述不能为空"></td>
           </tr>
           <tr>
-            <th width="100" class="text-r"><span class="c-red">*</span> 权限对应的路径：</th>
+            <th width="100" class="text-r"><span class="c-red">*</span> 权限路径：</th>
             <td><input type="text" style="width:200px" class="input-text" value="${permission.url}" placeholder="" id="url" name="url" datatype="*2-16" nullmsg="权限对应的路径不能为空"></td>
           </tr>
           <tr>

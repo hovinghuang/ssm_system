@@ -77,23 +77,6 @@
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script> -->
 <script type="text/javascript">
 $(function(){
-	/* $("#submit").click(function(){
-		$.ajax({
-	        type : 'POST',
-	        data : $("#form-user-add").serialize(),
-	        url : "addUser",//请求的action路径  
-	        dataType: 'json',
-	        success: function(data){
-	        	layer.msg('提交成功!',{icon:1,time:1000});
-				setTimeout('window.parent.location.reload()',300); //延迟0.3秒
-				console.log("提交成功!");
-			},
-			error:function(data) {
-				console.log(data.msg);
-				layer.msg('提交失败!请重新编辑',{icon:1,time:1000});
-			}
-	    });
-	}); */
 	$("#form-user-add").validate({
 		/* rules:{
 			username:{

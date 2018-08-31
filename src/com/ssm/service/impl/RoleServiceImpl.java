@@ -76,7 +76,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<Role> list() {
 		RoleExample example = new RoleExample();
-		example.setOrderByClause("id desc");
+		example.setOrderByClause("id asc");
 		return roleMapper.selectByExample(example);
 
 	}

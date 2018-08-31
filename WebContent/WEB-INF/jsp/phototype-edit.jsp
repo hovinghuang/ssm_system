@@ -16,28 +16,25 @@
 <![endif]-->
 <link type="text/css" rel="stylesheet" href="static/h-ui/css/H-ui.css"/>
 <link type="text/css" rel="stylesheet" href="static/h-ui.admin/css/H-ui.admin.css"/>
-<title>添加权限</title>
+<title>编辑类型</title>
 </head>
 <body>
 <div class="pd-20">
   <div class="Huiform"><!-- action="saveUser" method="post"  -->
-    <form id="form-permission-add">
+    <form id="form-phototype-edit">
       <table class="table table-bg">
         <tbody>
           <tr>
-            <th width="100" class="text-r"><span class="c-red">*</span> 权限名称：</th>
-            <td><input type="text" style="width:200px" class="input-text" value="" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="权限名不能为空"></td>
+          	<input type="hidden" name="id" value="${photoType.id}"/>
+            <th width="100" class="text-r"><span class="c-red">*</span> 类型名称：</th>
+            <td><input type="text" style="width:200px" class="input-text" value="${photoType.name}" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="类型名不能为空"></td>
           </tr>
           <tr>
-            <th width="100" class="text-r"><span class="c-red">*</span> 权限描述：</th>
-            <td><input type="text" style="width:200px" class="input-text" value="" placeholder="" id="desc_" name="desc_" datatype="*2-16" nullmsg="权限描述不能为空"></td>
+            <th width="100" class="text-r"><span class="c-red">*</span> 类型描述：</th>
+            <td><input type="text" style="width:200px" class="input-text" value="${photoType.description}" placeholder="" id="description" name="description" datatype="*2-16" nullmsg="类型描述"></td>
           </tr>
           <tr>
-            <th width="100" class="text-r"><span class="c-red">*</span> 权限路径：</th>
-            <td><input type="text" style="width:200px" class="input-text" value="" placeholder="" id="url" name="url" datatype="*2-16" nullmsg="权限对应的路径不能为空"></td>
-          </tr>
-          <tr>
-            <th></th>
+          	<th></th>
             <td><button class="btn btn-success radius" type="submit"><i class="icon-ok"></i> 确定</button></td>
           </tr>
         </tbody>
@@ -57,14 +54,9 @@
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("#form-permission-add").validate({
+	$("#form-phototype-edit").validate({
 		rules:{
-			username:{
-				required:true,
-				minlength:2,
-				maxlength:16
-			},
-			desc_:{
+			name:{
 				required:true,
 			},
 		},
@@ -76,22 +68,22 @@ $(function(){
 		        async : false,
 		        cache : false,
 		        type : 'POST',
-		        data : $("#form-permission-add").serialize(),
-		        url : "addPermission",//请求的action路径  
+		        data : $("#form-phototype-edit").serialize(),
+		        url : "editPhotoType",//请求的action路径  
 		        dataType: 'json',
-				success:function(data) { //请求成功后处理函数。
+		        success:function(data) { //请求成功后处理函数。
 		        	console.log(data.msg);
 					if(data.msg == 'success'){
 						layer.msg('提交成功!',{icon:1,time:1000});
 						setTimeout('window.parent.location.reload()',300); //延迟0.3秒
 					}else{
-						layer.msg('提交失败!请检查，很可能是该用户名已经被占用。',{icon:1,time:2000});
+						layer.msg('提交失败!请检查，很可能是该类型名称已经被占用。',{icon:1,time:2000});
 					}
 		        },
 		        error:function(data) {//请求失败处理函数  
 		        	console.log(data.msg);
 					layer.msg('请求失败!稍等请重新提交',{icon:1,time:1000});
-		        },
+		        }
 		    });
 		}
 	});

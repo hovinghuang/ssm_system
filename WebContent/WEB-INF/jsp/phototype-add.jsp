@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -16,25 +15,21 @@
 <![endif]-->
 <link type="text/css" rel="stylesheet" href="static/h-ui/css/H-ui.css"/>
 <link type="text/css" rel="stylesheet" href="static/h-ui.admin/css/H-ui.admin.css"/>
-<title>添加权限</title>
+<title>添加角色</title>
 </head>
 <body>
 <div class="pd-20">
   <div class="Huiform"><!-- action="saveUser" method="post"  -->
-    <form id="form-permission-add">
+    <form id="form-phototype-add">
       <table class="table table-bg">
         <tbody>
           <tr>
-            <th width="100" class="text-r"><span class="c-red">*</span> 权限名称：</th>
-            <td><input type="text" style="width:200px" class="input-text" value="" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="权限名不能为空"></td>
+            <th width="100" class="text-r"><span class="c-red">*</span> 类型名称：</th>
+            <td><input type="text" style="width:200px" class="input-text" value="" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="类型名称不能为空"></td>
           </tr>
           <tr>
-            <th width="100" class="text-r"><span class="c-red">*</span> 权限描述：</th>
-            <td><input type="text" style="width:200px" class="input-text" value="" placeholder="" id="desc_" name="desc_" datatype="*2-16" nullmsg="权限描述不能为空"></td>
-          </tr>
-          <tr>
-            <th width="100" class="text-r"><span class="c-red">*</span> 权限路径：</th>
-            <td><input type="text" style="width:200px" class="input-text" value="" placeholder="" id="url" name="url" datatype="*2-16" nullmsg="权限对应的路径不能为空"></td>
+            <th width="100" class="text-r"><span class="c-red">*</span> 类型描述：</th>
+            <td><input type="text" style="width:200px" class="input-text" value="" placeholder="" id="description" name="description" datatype="*2-16" nullmsg="类型描述"></td>
           </tr>
           <tr>
             <th></th>
@@ -57,7 +52,7 @@
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("#form-permission-add").validate({
+	$("#form-phototype-add").validate({
 		rules:{
 			username:{
 				required:true,
@@ -76,10 +71,10 @@ $(function(){
 		        async : false,
 		        cache : false,
 		        type : 'POST',
-		        data : $("#form-permission-add").serialize(),
-		        url : "addPermission",//请求的action路径  
+		        data : $("#form-phototype-add").serialize(),
+		        url : "addPhotoType",//请求的action路径  
 		        dataType: 'json',
-				success:function(data) { //请求成功后处理函数。
+		        success:function(data) { //请求成功后处理函数。
 		        	console.log(data.msg);
 					if(data.msg == 'success'){
 						layer.msg('提交成功!',{icon:1,time:1000});

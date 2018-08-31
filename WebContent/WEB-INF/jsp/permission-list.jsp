@@ -65,7 +65,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 var table =$('.table-sort').dataTable({
-    "ordering": true,
     "bInfo": false,
     "searching": false,
 	"bPaginate": false ,//开启分页功能，如果不开启，将会全部显示
@@ -74,7 +73,7 @@ var table =$('.table-sort').dataTable({
 	/* "pagingType": "simple", */
 	"processing": true,
     "serverSide": true,
-	"aaSorting": [[1, "asc"]],
+	"ordering":false,
 	"ajax": {
         "url": "config/listPermissionTable",
         "type": "POST",

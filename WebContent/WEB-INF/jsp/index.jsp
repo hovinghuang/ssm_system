@@ -106,7 +106,8 @@
 			<dt><i class='Hui-iconfont'>&#xe620;</i> 企业相册管理    <i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-
+				<li><a data-href='listPhotoPage' data-title='相册内容管理' href='javascript:void(0)'>相册内容管理</a></li>
+				<li><a data-href='listPhotoTypePage' data-title='相册类型管理' href='javascript:void(0)'>相册类型管理</a></li>
 			</ul>
 		</dd>
 	</dl>
