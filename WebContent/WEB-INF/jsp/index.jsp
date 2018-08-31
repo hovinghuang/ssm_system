@@ -63,11 +63,12 @@
 </div>
 </header>
 <aside class="Hui-aside">
+<div class='menu_dropdown bk_2'>
 
        <c:forEach items="${userPermissions}" var="up">
        		<c:set var = "P1" value="操作员及权限管理"/> 
            <c:if test="${up.name eq P1}">
-               <c:out value="<div class='menu_dropdown bk_2'>
+               <c:out value="
 		<dl id='menu-article'>
 			<dt><i class='Hui-iconfont'>&#xe616;</i> 操作员及权限管理<i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
 			<dd>
