@@ -3,6 +3,7 @@
 <mapper namespace="com.ssm.mapper.PermissionMapper">
   <resultMap id="BaseResultMap" type="com.ssm.pojo.Permission">
     <id column="id" jdbcType="BIGINT" property="id" />
+     <id column="pid" jdbcType="INTEGER" property="pid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="desc_" jdbcType="VARCHAR" property="desc_" />
     <result column="url" jdbcType="VARCHAR" property="url" />
@@ -37,7 +38,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, desc_, url
+    id, pid, name, desc_, url
   </sql>
   <select id="selectByExample" parameterType="com.ssm.pojo.PermissionExample" resultMap="BaseResultMap">
     select
@@ -65,14 +66,17 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ssm.pojo.Permission" useGeneratedKeys="true">
-    insert into t_permission (name, desc_, url
+    insert into t_permission (pid, name, desc_, url
       )
-    values (#{name,jdbcType=VARCHAR}, #{desc_,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}
+    values (#{pid,jdbcType=INTEGER},#{name,jdbcType=VARCHAR}, #{desc_,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ssm.pojo.Permission" useGeneratedKeys="true">
     insert into t_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
+    <if test="pid != null">
+        pid,
+      </if>
       <if test="name != null">
         name,
       </if>
@@ -84,6 +88,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+    <if test="pid != null">
+        #{pid,jdbcType=INITEGER},
+      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
@@ -98,6 +105,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ssm.pojo.Permission">
     update t_permission
     <set>
+    <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -112,7 +122,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ssm.pojo.Permission">
     update t_permission
-    set name = #{name,jdbcType=VARCHAR},
+    set pid = #{pid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
       desc_ = #{desc_,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}

@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   <div class="cl pd-5 bg-1 bk-gray mt-20">
 <!--     <span class="l"><a href="javascript:;" onclick="users_del()" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a> -->
-    <a href="javascript:;" onclick="role_add('添加角色','config/addRolePage','550','230')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加角色</a></span>
+    <a href="javascript:;" onclick="role_add('添加角色','addRolePage','550','530')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加角色</a></span>
     <%-- <span class="r">共有数据：<strong>${amount}</strong> 条</span> --%>
   </div>
   <table class="table table-border table-bordered table-hover table-bg table-sort">
@@ -82,7 +82,7 @@ var table =$('.table-sort').dataTable({
     "serverSide": true,
 	"ordering":false,
 	"ajax": {
-        "url": "config/listRoleTable",
+        "url": "listRoleTable",
         "type": "POST",
         "dataType":"JSON",
     }, 
@@ -117,7 +117,7 @@ var table =$('.table-sort').dataTable({
         targets: 4,
         render: function (data, type, row, meta) {
         	var e_title = "编辑角色";
-        	var e_url = "config/editRolePage?id="+ data;
+        	var e_url = "editRolePage?id="+ data;
         	var e_id = data;
         	var e_w = 550;  	
         	var e_h = 550;
@@ -140,7 +140,7 @@ function role_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: 'config/deleteRole?id='+ id,
+			url: 'deleteRole?id='+ id,
 			dataType: 'json',
 			success:function(data) { //请求成功后处理函数。
 	        	console.log(data.msg);

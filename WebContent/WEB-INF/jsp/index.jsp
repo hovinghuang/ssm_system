@@ -73,9 +73,9 @@
 			<dt><i class='Hui-iconfont'>&#xe616;</i> 操作员及权限管理<i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href='config/listUserPage' data-title='用户管理' href='javascript:void(0)'>用户管理</a></li>
-					<li><a data-href='config/listRolePage' data-title='角色管理' href='javascript:void(0)'>角色管理</a></li>
-					<li><a data-href='config/listPermissionPage' data-title='权限管理' href='javascript:void(0)'>权限管理</a></li>
+					<li><a data-href='listUserPage' data-title='用户管理' href='javascript:void(0)'>用户管理</a></li>
+					<li><a data-href='listRolePage' data-title='角色管理' href='javascript:void(0)'>角色管理</a></li>
+					<li><a data-href='listPermissionPage' data-title='权限管理' href='javascript:void(0)'>权限管理</a></li>
 			</ul>
 		</dd>
 	</dl>" escapeXml="false" default="默认值"></c:out>

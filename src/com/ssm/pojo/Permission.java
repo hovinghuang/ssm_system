@@ -1,43 +1,53 @@
 package com.ssm.pojo;
 
 public class Permission {
-    private Long id;
+	private Long id;
 
-    private String name;
+	private int pid;
 
-    private String desc_;
+	private String name;
 
-    private String url;
+	private String desc_;
 
-    public Long getId() {
-        return id;
-    }
+	private String url;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getDesc_() {
-        return desc_;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setDesc_(String desc_) {
-        this.desc_ = desc_ == null ? null : desc_.trim();
-    }
+	public String getDesc_() {
+		return desc_;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public void setDesc_(String desc_) {
+		this.desc_ = desc_ == null ? null : desc_.trim();
+	}
 
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
-    }
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url == null ? null : url.trim();
+	}
+
+	public int getPid() {
+		return pid;
+	}
+
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
 }

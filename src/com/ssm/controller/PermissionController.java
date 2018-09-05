@@ -16,7 +16,7 @@ import com.ssm.pojo.Permission;
 import com.ssm.service.PermissionService;
 
 @Controller
-@RequestMapping("config")
+@RequestMapping("")
 public class PermissionController {
 	@Autowired
 	PermissionService permissionService;
@@ -68,6 +68,17 @@ public class PermissionController {
 		return "permission-add";
 	}
 
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping("getPermissionTree") public JSONObject
+	 * getPermissionTree() { List<Permission> ps = permissionService.list();
+	 * 
+	 * Map<String, Object> info = new HashMap<String, Object>();
+	 * info.put("data", ps); String a = JSON.toJSONString(info); JSONObject
+	 * permission_tree = JSONObject.parseObject(a); return permission_tree; }
+	 */
+
 	@ResponseBody
 	@RequestMapping("addPermission")
 	public String addPermission(Permission permission) {
@@ -82,6 +93,7 @@ public class PermissionController {
 			return json.toJSONString();
 		} catch (Exception e) {
 			// 向前端返回操作失败的json信息
+			e.printStackTrace();
 			JSONObject json = new JSONObject();
 			json.put("msg", "error");
 			return json.toJSONString();

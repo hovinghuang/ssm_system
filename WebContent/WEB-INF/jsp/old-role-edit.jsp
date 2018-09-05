@@ -14,8 +14,6 @@
 <script type="text/javascript" src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
 <script type="text/javascript" src="http://cdn.bootcss.com/css3pie/2.0beta1/PIE_IE678.js"></script>
 <![endif]-->
-<link rel="stylesheet" href="lib/zTree/v3/css/demo.css" type="text/css">
-<link rel="stylesheet" href="lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <link type="text/css" rel="stylesheet" href="static/h-ui/css/H-ui.css"/>
 <link type="text/css" rel="stylesheet" href="static/h-ui.admin/css/H-ui.admin.css"/>
 <title>编辑角色</title>
@@ -24,12 +22,10 @@
 <div class="pd-20">
   <div class="Huiform"><!-- action="saveUser" method="post"  -->
     <form id="form-role-edit">
-    <div class="input-dyna-add">
-        </div>
       <table class="table table-bg">
         <tbody>
           <tr>
-          	<input type="hidden" id="id" name="id" value="${role.id}"/>
+          	<input type="hidden" name="id" value="${role.id}"/>
             <th width="100" class="text-r"><span class="c-red">*</span> 角色名称：</th>
             <td><input type="text" style="width:200px" class="input-text" value="${role.name}" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="角色名不能为空"></td>
           </tr>
@@ -40,14 +36,21 @@
           <tr>
             <th width="100" class="text-r"><span class="c-red">*</span> 配置权限：</th>
             <td>
-            	<ul id="treeDemo" style="width:200px" class="ztree"></ul> 
+            	<div style="width:300px">
+                <c:forEach items="${ps}" var="p">
+                    <c:set var="hasPermission" value="false" />
+                    <c:forEach items="${currentPermissions}" var="currentPermission">
+                        <c:if test="${p.id==currentPermission.id}">
+                            <c:set var="hasPermission" value="true" />
+                        </c:if>
+                    </c:forEach>
+                    <input type="checkbox" ${hasPermission?"checked='checked'":"" } name="permissionIds" value="${p.id}"> ${p.name}<br>
+                </c:forEach>
+            </div> 
             </td>
           </tr>
           <tr>
-            <th width="100" class="text-r">
-            <button class="btn btn-success radius" type="submit"><i class="icon-ok"></i> 确定</button>
-			</th>
-            <td></td>
+            <td><button class="btn btn-success radius" type="submit"><i class="icon-ok"></i> 确定</button></td>
           </tr>
         </tbody>
       </table>
@@ -56,8 +59,6 @@
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="lib/zTree/v3/js/jquery.ztree.core-3.5.js"></script>
-<script type="text/javascript" src="lib/zTree/v3/js/jquery.ztree.excheck-3.5.js"></script>
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
 <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
@@ -107,101 +108,6 @@ $(function(){
 		}
 	});
 });
-</script>
-<script type="text/javascript">
-var zNodes=eval('${ztreeNodeVoList2}');
-$(function() {
-var setting = {
-        check: {
-            enable: true,
-            chkboxType: {"Y":"s", "N":"ps"},
-            chkStyle : "checkbox",
-        },
-        data: {
-            simpleData: {
-            	enable: true,
-               /*  idKey:"id",
-        		pIdKey:"pId",
-        		rootPId:0 */
-            }
-        },
-        callback:{
-            beforeCheck:true,
-            onCheck:onCheck
-       }
-    };
-$.fn.zTree.init($("#treeDemo"), setting, zNodes);
-});
-//当页面加载完毕，向后台发送ajax请求，获取用户id为1的用户所拥有的权限
-//（这里要显示所有权限，该id用户的权限回显时，被自动选中）,这里的用户id为1仅做测试使用，实际开发中会传值
-
-function loadPower(id){
-	var treeObj=$.fn.zTree.getZTreeObj("treeDemo");
-	/* treeObj.expandAll(true); */
-      $.ajax({
-        type:"post",
-        url:"queryFunByRoleId?id="+id,
-        /* data:{"roleId":roleId}, */
-        async:false,
-        dataType:"json",
-        success:function(data){
-        	var zNodes2=data.data;
-        	/* var treeObj=$.fn.zTree.getZTreeObj("treeDemo");
-        	treeObj.checkAllNodes(true); */
-        	for(var i=0, len=zNodes2.length; i<len; i++){
-        		console.log('zNodes2['+ i +']:' + zNodes2[i].name);
-        		var node = treeObj.getNodeByParam("id",zNodes2[i].id, null);
-        		console.log('zNodes2['+ i +']的状态:' + node.checked);
-        		treeObj.checkNode(node, true, true);
-        	}
-        }
-      })
-}
-
-$(function() {
-    // 授权树初始化
-    var setting = {
-        check: {
-            enable: true,
-            chkboxType: {"Y":"s", "N":"ps"},
-            chkStyle : "checkbox",
-        },
-        data: {
-            simpleData: {
-            	enable: true,
-                /* idKey:"id",
-        		pIdKey:"pId",
-        		rootPId:0 */
-            }
-        },
-        callback:{
-            beforeCheck:true,
-            onCheck:onCheck
-       }
-    };
-  //页面加载完毕时加载此方法
-    $(document).ready(function(){
-        var id = $("#id").val();
-        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-        loadPower(id);
-    });
-});
-
-function onCheck(e,treeId,treeNode){
-    var treeObj=$.fn.zTree.getZTreeObj("treeDemo"),
-    nodes=treeObj.getCheckedNodes(true),
-    v="";
-    $(".input-dyna-add").children("input").remove();
-    for(var i=0;i<nodes.length;i++){
-  	  if(nodes != null){ 
-   	    	var input = $("<input type='hidden' class='form-control' name='nodes' value='"+ nodes[i].id +"'/>");
-   	        $(".input-dyna-add").append(input);
-    	    v+=nodes[i].name + ",";
-    	    console.log("节点id:"+nodes[i].id+"节点名称"+v); //获取选中节点的值
-   	 }
-	}
-}
-//
 </script>
 </body>
 </html>

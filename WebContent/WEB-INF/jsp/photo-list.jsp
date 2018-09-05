@@ -146,11 +146,23 @@ function photo_search(title,url,w,h){
 }
 /*相册-添加*/
 function photo_add(title,url,w,h){
-	layer_show(title,url,w,h);
+	/* layer_show(title,url,w,h); */
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
 }
 /*相册-编辑*/
 function photo_edit(title,url,id,w,h){
-	layer_show(title,url,w,h);
+	/* layer_show(title,url,w,h); */
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
 }
 /*相册-预览*/
 function photo_show(title,url,id){

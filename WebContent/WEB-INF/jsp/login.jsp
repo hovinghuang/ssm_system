@@ -2,89 +2,179 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<link href="static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
-<link href="static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
-<link href="static/h-ui.admin/css/style.css" rel="stylesheet" type="text/css" />
-<title>后台登录</title>
-</head>
-<body>
-<input type="hidden" id="TenantId" name="TenantId" value="" />
-<div class="header"></div>
-<div class="loginWraper">
-  <div id="loginform" class="loginBox">
-    <div class="text-c"  ><h4 id="showResult" class="c-red">${error}</h4></div>
-    <form class="form form-horizontal" action="login" method="post">
-      <div class="row cl">
-        <label class="form-label col-xs-3"><img src="static/h-ui.admin/images/username.png"width="42" height="42"><!-- <i class="Hui-iconfont">&#xe60d;</i> --></label>
-        <div class="formControls col-xs-8">
-          <input id="username" name="username" type="text" placeholder="账户" class="input-text size-L">
-        </div>
-      </div>
-      <div class="row cl">
-        <label class="form-label col-xs-3"><img src="static/h-ui.admin/images/password.png"width="42" height="42"><!-- <i class="Hui-iconfont">&#xe60e;</i> --></label>
-        <div class="formControls col-xs-8">
-          <input id="password" name="password" type="password" placeholder="密码" class="input-text size-L">
-        </div>  
-      </div>
-      <div class="row cl">
-        <div class="formControls col-xs-8 col-xs-offset-3">
-          <input name="checkCode" id="checkCode" class="input-text size-L" type="text" placeholder="验证码" value="" style="width:150px;">
-          <img src="PictureCheckCode" id="CreateCheckCode" align="middle" height="40" width="100"> <a id="kanbuq" class="c-green" href="" onclick="myReload()">看不清，换一张</a> </div>
-      </div>
-      <div class="row cl">
-        <div class="formControls col-xs-8 col-xs-offset-3">
-          <input name="" type="submit" onclick="checkform(event)" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
-          <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-<div class="footer">Copyright by 成都金融控股企业微信管理系统</div>
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系统登录</title>
+<link href="static/login/css/login.css" rel="stylesheet" type="text/css" media="all" />
+<link href="static/login/css/demo.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="static/login/js/jquery1.42.min.js"></script>
+<script type="text/javascript" src="static/login/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="static/login/js/jquery.SuperSlide.js"></script>
+<script type="text/javascript" src="static/login/js/Validform_v5.3.2_min.js"></script>
+
+<script>
+
+//解决session过期，跳转到首页并跳出iframe
+if (window != top)   
+    top.location.href = location.href;   
+
+//初始化页面时验证是否记住了密码
+$(document).ready(function() {
+    if ($.cookie("rmbUser") == "true") {
+        $("#rmbUser").attr("checked", true);
+        $("#username").val($.cookie("username"));
+        $("#password").val($.cookie("password"));
+    }
+});
+//保存用户信息
+function saveUserInfo() {
+    if ($("#rmbUser").attr("checked") == true) {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        $.cookie("rmbUser", "true", { expires: 7 }); // 存储一个带7天期限的 cookie
+        $.cookie("username", username, { expires: 7 }); // 存储一个带7天期限的 cookie
+        $.cookie("password", password, { expires: 7 }); // 存储一个带7天期限的 cookie
+    }
+    else {
+        $.cookie("rmbUser", "false", { expires: -1 });
+        $.cookie("username", '', { expires: -1 });
+        $.cookie("password", '', { expires: -1 });
+    }
+}
 function myReload() {
 	document.getElementById("CreateCheckCode").src = document
 			.getElementById("CreateCheckCode").src
 			+ "?nocache=" + new Date().getTime();
 }
-function checkform(evt) {
-    $user_name = document.getElementById("username").value;
-    $user_pwd = document.getElementById("password").value;
-    $user_checkCode = document.getElementById("checkCode").value;
-    if ($user_name == '') {
-        /* alert("用户名不能为空"); */
-        $("#showResult").empty();
-        $("#showResult").append("用户名不能为空");
-        $("#showResult").css("color", "red");
-        evt.preventDefault();
-        return false;
-    }
 
-    if ($user_pwd == '') {
-        $("#showResult").empty();
-        $("#showResult").append("密码不能为空");
-        $("#showResult").css("color", "red");
-        evt.preventDefault();
-        return false;
-    }
-    
-    if ($user_checkCode == '') {
-        $("#showResult").empty();
-        $("#showResult").append("验证码不能为空");
-        $("#showResult").css("color", "red");
-        evt.preventDefault();
-        return false;
-    }
+$(function(){
 
-    return true;
-}
+$(".i-text").focus(function(){
+$(this).addClass('h-light');
+});
+
+$(".i-text").focusout(function(){
+$(this).removeClass('h-light');
+});
+
+$("#username").focus(function(){
+ var username = $(this).val();
+ if(username=='输入账号'){
+ $(this).val('');
+ }
+});
+
+$("#username").focusout(function(){
+ var username = $(this).val();
+ if(username==''){
+ $(this).val('输入账号');
+ }
+});
+
+$("#password").focus(function(){
+ var password = $(this).val();
+ if(password=='输入密码'){
+ $(this).val('');
+ }
+});
+
+
+$("#yzm").focus(function(){
+ var username = $(this).val();
+ if(username=='输入验证码'){
+ $(this).val('');
+ }
+});
+
+$("#yzm").focusout(function(){
+ var username = $(this).val();
+ if(username==''){
+ $(this).val('输入验证码');
+ }
+});
+
+});
+
+
+
+
 </script>
+
+
+</head>
+
+<body>
+
+
+<div class="header">
+  <h1 class="headerLogo"><a title="企业微信后台管理系统" target="_blank" href="#"><img alt="logo" src="static/login/images/logo.gif"></a></h1>
+	<div class="headerNav">
+		<a target="_blank" href="#">企业官网</a>
+		<a target="_blank" href="#">关于我们</a>
+		<a target="_blank" href="#">开发团队</a>
+		<a target="_blank" href="#">意见反馈</a>
+		<a target="_blank" href="#">帮助</a>	
+	</div>
+</div>
+
+<div class="banner">
+
+<div class="login-aside">
+  <div id="o-box-up"></div>
+  <div id="o-box-down"  style="table-layout:fixed;">
+   <div class="error-box">${error}</div>
+   
+   <form class="registerform" action="login" method="post">
+   <div class="fm-item">
+	   <label for="logonId" class="form-label">账号：</label>
+	   <input type="text" value="" maxlength="100" id="username" name="username" class="i-text" datatype="s2-18" errormsg="用户名至少2个字符,最多18个字符！" required autocomplete='current-username'>    
+       <div class="ui-form-explain"></div>
+  </div>
+  
+  <div class="fm-item">
+	   <label for="logonId" class="form-label">密码：</label>
+	   <input type="password" value="" maxlength="100" id="password" name="password" class="i-text" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！" required autocomplete='current-password'>    
+       <div class="ui-form-explain"></div>
+  </div>
+  
+  <div class="fm-item pos-r">
+	   <label for="logonId" class="form-label">验证码</label>
+	   <input name="checkCode" type="text" value="" maxlength="100" id="yzm" class="i-text yzm" nullmsg="请输入验证码！" >    
+       <div class="ui-form-explain"><img id="CreateCheckCode" src="PictureCheckCode" class="yzm-img" onclick="myReload()"/></div>
+  </div>
+  <div class="fm-item">
+  	<label class="form-label"><input type="checkbox" id="rmbUser">记住用户名</label>
+  </div>
+  <div class="fm-item">
+	   <label for="logonId" class="form-label"></label>
+	   <input type="submit" value="" tabindex="4" onclick="saveUserInfo()" id="send-btn" class="btn-login"> 
+       <div class="ui-form-explain"></div>
+  </div>
+  
+  </form>
+  
+  </div>
+
+</div>
+
+	<div class="bd">
+		<ul>
+			<li style="background:url(static/login/themes/theme-pic1.jpg) #CCE1F3 center 0 no-repeat;"><a target="_blank" href="#"></a></li>
+			<li style="background:url(static/login/themes/theme-pic2.jpg) #BCE0FF center 0 no-repeat;"><a target="_blank" href="#"></a></li>
+		</ul>
+	</div>
+
+	<div class="hd"><ul></ul></div>
+</div>
+<script type="text/javascript">
+/* jQuery(".banner").slide({ titCell:".hd ul", mainCell:".bd ul", effect:"fold",  autoPlay:true, autoPage:true, trigger:"click" }); */
+</script>
+
+
+<div class="banner-shadow"></div>
+
+<div class="footer">
+   <p>Copyright &copy; 2018.Company name All rights reserved.</p>
+</div>
+
 </body>
 </html>

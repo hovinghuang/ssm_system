@@ -12,6 +12,7 @@
     http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/util
     http://www.springframework.org/schema/util/spring-util.xsd">
      
+     
 	<!-- url过滤器 -->         
     <bean id="urlPathMatchingFilter" class="com.ssm.filter.URLPathMatchingFilter"/>
          

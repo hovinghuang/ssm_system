@@ -36,12 +36,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
     -
     <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;"> -->
-    <input type="text" value="" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="key" name="key"><button type="submit" href="javascript:;" onclick="user_search('关键字查找用户','config/searchUserByKeyPage','1000','700')" class="btn btn-success" id="sub" name=""><i class="icon-search"></i> 搜用户</button>
+    <input type="text" value="" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="key" name="key"><button type="submit" href="javascript:;" onclick="user_search('关键字查找用户','searchUserByKeyPage','1000','700')" class="btn btn-success" id="sub" name=""><i class="icon-search"></i> 搜用户</button>
 
   </div>
   <div class="cl pd-5 bg-1 bk-gray mt-20">
     <span class="l"><a href="javascript:;" onclick="users_del()" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a>
-    <a href="javascript:;" onclick="user_add('添加用户','config/addUserPage','550','550')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加用户</a></span>
+    <a href="javascript:;" onclick="user_add('添加用户','addUserPage','550','550')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加用户</a></span>
     <span class="r">共有数据：<strong>${amount}</strong> 条</span>
   </div>
   <table class="table table-border table-bordered table-hover table-bg table-sort">
@@ -96,7 +96,7 @@ var table =$('.table-sort').dataTable({
 		    }
 		  },
 	"ajax": {
-        "url": "config/listUserTable",
+        "url": "listUserTable",
         "type": "POST",
         "dataType":"JSON",
     }, 
@@ -135,7 +135,7 @@ var table =$('.table-sort').dataTable({
         targets: 9,
         render: function (data, type, row, meta) {
         	var e_title = "编辑用户";
-        	var e_url = "config/editUserPage?id="+ data;
+        	var e_url = "editUserPage?id="+ data;
         	var e_id = data;
         	var e_w = 550;  	
         	var e_h = 570;
@@ -168,7 +168,7 @@ function user_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: 'config/deleteUser?id='+ id,
+			url: 'deleteUser?id='+ id,
 			dataType: 'json',
 			success: function(data){//success指的是请求并成功返回信息
 				console.log(data.msg);
@@ -199,7 +199,7 @@ function users_del(){
 		layer.confirm('确认要批量删除吗？',function(index){
 			$.ajax({
 				type: 'POST',
-				url: 'config/deleteUsers',
+				url: 'deleteUsers',
 				dataType: 'json',
 				traditional:true,
 				data: {

@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ssm.pojo.InitialPreviewConfig;
 import com.ssm.pojo.Photo;
 import com.ssm.pojo.PhotoPlus;
 import com.ssm.pojo.PhotoType;
@@ -216,7 +217,6 @@ public class PhotoController {
 	// 根据id批量删除用户
 
 	@ResponseBody
-
 	@RequestMapping("deletePhotos")
 	public String deletePhotos(Integer[] idArray) {
 		// 设置默认保存路径，设置当前时间
@@ -258,6 +258,78 @@ public class PhotoController {
 	}
 
 	@ResponseBody
+	@RequestMapping("getEditPhoto")
+	public String getEditPhoto(Model model, int id) {
+		Photo photo = photoService.findPhotoById(id);
+		String filename = photo.getFilename();
+		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+
+		String filePath = photo_url + File.separator + filename;
+		System.out.println("filePath:" + filePath);
+		File[] files = new File(filePath).listFiles();
+		String webfilename = filename;
+		List<String> photonamelist = new ArrayList<String>();
+		List<InitialPreviewConfig> conList = new ArrayList<InitialPreviewConfig>();
+		if (files != null) {
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].getName().replaceAll("(.jpg|.png|.gif|)+", "").length() != files[i].getName().length()) {
+					/* System.out.println(files[i].getName()); */
+					String getPhotoUrl = "/ssm_system/photo/" + webfilename + "/" + files[i].getName();
+					Map<String, String> extra = new HashMap<String, String>();
+					String str = "photoname";
+					extra.put(str, files[i].getName());
+					InitialPreviewConfig con = new InitialPreviewConfig(files[i].getName(), 576237, "120px",
+							"editDeletePhoto", id, extra);
+					photonamelist.add(getPhotoUrl);
+					conList.add(con);
+					System.out.println(getPhotoUrl);
+				}
+			}
+		}
+		// 向前端返回操作成功的json信息
+		JSONObject json = new JSONObject();
+		json.put("msg", "success");
+		json.put("path", photonamelist);
+		json.put("con", conList);
+		return json.toJSONString();
+	}
+
+	@ResponseBody
+	@RequestMapping("editDeletePhoto")
+	public String editDeletePhoto(Model model, int key, String photoname) {
+		Photo photo = photoService.findPhotoById(key);
+		String filename = photo.getFilename();
+		/* String photoname = extra.get("photoname").toString(); */
+		// 设置默认保存路径，设置当前时间
+		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+		String delphotoname = photo_url + File.separator + filename + File.separator + photoname;
+
+		try {
+			// 根据id查出文件夹，删除文件夹
+			try {
+				System.out.println("delphotoname==" + delphotoname);
+				File delphoto = new File(delphotoname);
+				delphoto.delete();// 删除文件
+			} catch (Exception e) {
+				// 向前端返回操作失败的json信息
+				JSONObject json = new JSONObject();
+				json.put("msg", "error");
+				return json.toJSONString();
+			}
+
+			// 向前端返回操作成功的json信息
+			JSONObject json = new JSONObject();
+			json.put("msg", "success");
+			return json.toJSONString();
+		} catch (Exception e) {
+			// 向前端返回操作失败的json信息
+			JSONObject json = new JSONObject();
+			json.put("msg", "error");
+			return json.toJSONString();
+		}
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "editPhoto", method = RequestMethod.POST)
 	public String editPhoto(@RequestParam("filename") MultipartFile[] files, HttpServletRequest request,
 			HttpServletResponse response, HttpSession session, int id) {
@@ -283,19 +355,19 @@ public class PhotoController {
 
 		String encodedfilename = new SimpleHash(algorithmName, filename, salt, times).toString();
 
-		String savefileurl = photo_url + File.separator + encodedfilename;
-		System.out.println("savefileurl==" + savefileurl);
 		FileUpload fileUpload = new FileUpload();
 		Photo photo = photoService.findPhotoById(id);
+		String oldfilename = photo.getFilename();
+		String oldsalt = photo.getSalt();
+		String savefileurl = photo_url + File.separator + oldfilename;
+		System.out.println("savefileurl==" + savefileurl);
 		String folderPath = photo_url + File.separator + photo.getFilename();
 
 		try {
 			// 将图片文件写入photo文件夹CommonsMultipartFile file
 			if (files != null) {
-				FileUtils.deleteDirectory(new File(folderPath));// tmp目录下面包含多个子文件夹和文件
+				/* FileUtils.deleteDirectory(new File(folderPath)); */// tmp目录下面包含多个子文件夹和文件
 				fileUpload.saveFile(files, savefileurl);
-				photo.setFilename(encodedfilename);
-				photo.setSalt(salt);
 			}
 
 			// 将拿到的相册信息插入数据库
@@ -304,6 +376,9 @@ public class PhotoController {
 			photo.setUploadtime(uploadtime);
 			photo.setUploaduser(userName);
 			photo.setTid(tid);
+			photo.setFilename(oldfilename);
+			photo.setSalt(oldsalt);
+
 			photoService.update(photo);
 
 			// 向前端返回操作成功的json信息
@@ -369,10 +444,12 @@ public class PhotoController {
 		String webfilename = filename;
 		model.addAttribute("webfilename", webfilename);
 		List<String> photonamelist = new ArrayList<String>();
-		for (int i = 0; i < files.length; i++) {
-			if (files[i].getName().replaceAll("(.jpg|.png|.gif|)+", "").length() != files[i].getName().length()) {
-				System.out.println(files[i].getName());
-				photonamelist.add(files[i].getName());
+		if (files != null) {
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].getName().replaceAll("(.jpg|.png|.gif|)+", "").length() != files[i].getName().length()) {
+					System.out.println(files[i].getName());
+					photonamelist.add(files[i].getName());
+				}
 			}
 		}
 		model.addAttribute("photonamelist", photonamelist);

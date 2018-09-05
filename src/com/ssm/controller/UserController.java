@@ -24,7 +24,7 @@ import com.ssm.service.UserRoleService;
 import com.ssm.service.UserService;
 
 @Controller
-@RequestMapping("config")
+@RequestMapping("")
 public class UserController {
 	@Autowired
 	UserRoleService userRoleService;

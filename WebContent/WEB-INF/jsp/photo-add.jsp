@@ -151,6 +151,7 @@ function initFileInput(ctrlName) {
         showRemove : true, //显示移除按钮  
         showPreview : true, //是否显示预览  
         showCaption: false,//是否显示标题  
+        showClose:false,
         browseClass: "btn btn-primary", //按钮样式   
         maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小  
         enctype: 'multipart/form-data',  

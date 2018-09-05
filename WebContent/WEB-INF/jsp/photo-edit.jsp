@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,photo-scalable=no" />
+<!-- <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,photo-scalable=no" /> -->
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <!--[if lt IE 9]>
 <script type="text/javascript" src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
@@ -46,7 +46,7 @@ option:hover{
             <p  style="float:right">相册名称：</p>
           </div>
           <div class="col-sm-9">
-            <input type="hidden" name="id" value="${photo.id}"/>
+            <input type="hidden" id="id" name="id" value="${photo.id}"/>
             <input type="text" class="form-control" value="${photo.name}" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="相册名不能为空">
           </div>
           </div>
@@ -91,7 +91,7 @@ option:hover{
           <div class="col-sm-2">
           </div>
     	<div class="col-sm-9">
-            <button onClick="photo_save_submit();" class="btn btn-primary radius" id="submit" type="button"><i class="icon-ok"></i>&nbsp;&nbsp;确&nbsp;定&nbsp;&nbsp;</button>
+            <button onClick="photo_save_submit();" class="btn btn-primary radius" id="submit" type="button"><i class="icon-ok"></i>保存修改</button>
           </div>
           </div>   
     </form>
@@ -100,13 +100,14 @@ option:hover{
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
 <!--请在下方写此页面业务相关的脚本--> 
 <!-- <script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> -->
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script src="lib/fileinput/js/bootstrap.min.js"></script>
 <script src="lib/fileinput/js/fileinput.min.js" type="text/javascript"></script>
 <script src="lib/fileinput/js/zh.js" type="text/javascript"></script>   
 
@@ -140,7 +141,49 @@ $.ajax({
 	},
 });
 }
-$(function () {  
+
+$("#input-id").fileinput('destroy');
+
+var id = $("#id").val();
+//初始化获取原有文件
+$(function(){
+  $.ajax({
+     type : "post",
+     url : "getEditPhoto?id="+id,
+     dataType : "json",
+     success : function(data) {
+        var path = data.path;
+     	var con = data.con;
+     	edit_image(path,con);
+     },
+     error: function(XMLHttpRequest, textStatus, errorThrown) {
+     	layer.msg('请求失败！');
+     }
+ });
+ 
+});
+
+
+function edit_image(path,con){
+    $("#input-id").fileinput({
+         uploadUrl: "", //上传到后台处理的方法
+         showUpload: false, //是否显示上传按钮  
+         uploadAsync: false, //设置同步，异步 （同步）
+         language: 'zh', //设置语言
+         overwriteInitial: false, //不覆盖已存在的图片
+         browseClass: "btn btn-primary", //按钮样式   
+         initialPreviewShowDelete:true,
+         showClose:false,
+        /*  dropZoneEnabled:false, */
+        //下面几个就是初始化预览图片的配置    
+         initialPreviewAsData: true,
+         initialPreviewFileType: 'image',
+         initialPreview:path , //要显示的图片的路径
+         initialPreviewConfig:con,
+         deleteUrl: "/editDeletePhoto",
+    }); 
+}
+/* $(function () {  
     initFileInput("input-id");  
 })    
 function initFileInput(ctrlName) {  
@@ -170,7 +213,7 @@ function initFileInput(ctrlName) {
     }).on('fileerror', function(event, data, msg) {  //一个文件上传失败  
         console.log('文件上传失败！'+data.id);  
     })  
-}
+} */
 </script>
 </body>
 </html>

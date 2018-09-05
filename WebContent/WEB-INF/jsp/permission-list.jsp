@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="text-c"><!--  日期范围： -->
   </div>
   <div class="cl pd-5 bg-1 bk-gray mt-20">
-    <a href="javascript:;" onclick="permission_add('添加权限','config/addPermissionPage','550','330')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加权限</a></span>
+    <a href="javascript:;" onclick="permission_add('添加权限','addPermissionPage','550','330')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加权限</a></span>
   </div>
   <table class="table table-border table-bordered table-hover table-bg table-sort">
     <thead>
@@ -75,7 +75,7 @@ var table =$('.table-sort').dataTable({
     "serverSide": true,
 	"ordering":false,
 	"ajax": {
-        "url": "config/listPermissionTable",
+        "url": "listPermissionTable",
         "type": "POST",
         "dataType":"JSON",
     }, 
@@ -110,10 +110,10 @@ var table =$('.table-sort').dataTable({
         targets: 4,
         render: function (data, type, row, meta) {
         	var e_title = "编辑权限";
-        	var e_url = "config/editPermissionPage?id="+ data;
+        	var e_url = "editPermissionPage?id="+ data;
         	var e_id = data;
         	var e_w = 550;  	
-        	var e_h = 550;
+        	var e_h = 350;
             return '<a title="编辑" href="javascript:;" onclick="permission_edit('+'\''+e_title+'\''+','+'\''+e_url+'\''+','+'\''+e_id+'\''+','+'\''+e_w+'\''+','+'\''+e_h+'\''+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> '
             +'<a title="删除" href="javascript:;" onclick="permission_del(this,'+data+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
         }
@@ -133,7 +133,7 @@ function permission_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: 'config/deletePermission?id='+ id,
+			url: 'deletePermission?id='+ id,
 			dataType: 'json',
 			success:function(data) { //请求成功后处理函数。
 	        	console.log(data.msg);
