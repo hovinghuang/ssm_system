@@ -102,8 +102,10 @@ public class RoleController {
 			permissionIds = (long[]) ConvertUtils.convert(arr, long.class);
 		}
 		try {
-			// 设置用户权限
-			rolePermissionService.setPermissions(role, permissionIds);
+			if (arr != null) {
+				// 设置用户权限
+				rolePermissionService.setPermissions(role, permissionIds);
+			}
 			// 提交编辑好的角色
 			roleService.update(role);
 			// 向前端返回操作成功的json信息

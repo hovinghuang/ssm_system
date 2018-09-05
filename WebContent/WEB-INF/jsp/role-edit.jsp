@@ -110,19 +110,16 @@ $(function(){
 </script>
 <script type="text/javascript">
 var zNodes=eval('${ztreeNodeVoList2}');
-$(function() {
+/* $(function() {
 var setting = {
         check: {
             enable: true,
-            chkboxType: {"Y":"s", "N":"ps"},
+            chkboxType: {"Y":"ps", "N":"ps"},
             chkStyle : "checkbox",
         },
         data: {
             simpleData: {
             	enable: true,
-               /*  idKey:"id",
-        		pIdKey:"pId",
-        		rootPId:0 */
             }
         },
         callback:{
@@ -131,7 +128,7 @@ var setting = {
        }
     };
 $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-});
+}); */
 //当页面加载完毕，向后台发送ajax请求，获取用户id为1的用户所拥有的权限
 //（这里要显示所有权限，该id用户的权限回显时，被自动选中）,这里的用户id为1仅做测试使用，实际开发中会传值
 
@@ -152,7 +149,7 @@ function loadPower(id){
         		console.log('zNodes2['+ i +']:' + zNodes2[i].name);
         		var node = treeObj.getNodeByParam("id",zNodes2[i].id, null);
         		console.log('zNodes2['+ i +']的状态:' + node.checked);
-        		treeObj.checkNode(node, true, true);
+        		treeObj.checkNode(node, true, false);
         	}
         }
       })
@@ -163,7 +160,7 @@ $(function() {
     var setting = {
         check: {
             enable: true,
-            chkboxType: {"Y":"s", "N":"ps"},
+            chkboxType: {"Y":"ps", "N":"ps"},
             chkStyle : "checkbox",
         },
         data: {

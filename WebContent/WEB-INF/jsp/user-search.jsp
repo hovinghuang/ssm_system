@@ -79,6 +79,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 var searchkey = parent.$("#key").val();
+var datemin = parent.$("#datemin").val();
+var datemax = parent.$("#datemax").val();
 var table =$('.table-sort').dataTable({
     "ordering": true,
     "bInfo": false,
@@ -91,7 +93,7 @@ var table =$('.table-sort').dataTable({
     "serverSide": true,
 	"aaSorting": [[1, "asc"]],
 	"ajax": {
-        "url": "config/searchUserByKey?key="+searchkey,
+        "url": "searchUserByKey?key="+searchkey+"&datemin="+datemin+"&datemax="+datemax,
         "type": "POST",
         "dataType":"JSON",
     }, 
@@ -130,7 +132,7 @@ var table =$('.table-sort').dataTable({
         targets: 9,
         render: function (data, type, row, meta) {
         	var e_title = "编辑用户";
-        	var e_url = "config/editUserPage?id="+ data;
+        	var e_url = "editUserPage?id="+ data;
         	var e_id = data;
         	var e_w = 550;  	
         	var e_h = 550;
@@ -150,7 +152,7 @@ function user_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: 'config/deleteUser?id='+ id,
+			url: 'deleteUser?id='+ id,
 			dataType: 'json',
 			success: function(data){//success指的是请求并成功返回信息
 				console.log(data.msg);
@@ -181,7 +183,7 @@ function users_del(){
 		layer.confirm('确认要批量删除吗？',function(index){
 			$.ajax({
 				type: 'POST',
-				url: 'config/deleteUsers',
+				url: 'deleteUsers',
 				dataType: 'json',
 				traditional:true,
 				data: {

@@ -133,7 +133,7 @@ $(function(){
 			$.ajax({
 		        type : 'POST',
 		        data : $("#form-user-edit").serialize(),
-		        url : "config/editUser",//请求的action路径  
+		        url : "editUser",//请求的action路径  
 		        dataType: 'json',
 		        success:function(data) { //请求成功后处理函数。
 		        	console.log(data.msg);

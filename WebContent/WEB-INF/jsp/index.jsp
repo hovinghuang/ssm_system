@@ -72,11 +72,31 @@
 		<dl id='menu-article'>
 			<dt><i class='Hui-iconfont'>&#xe616;</i> 操作员及权限管理<i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
 			<dd>
-				<ul>
-					<li><a data-href='listUserPage' data-title='用户管理' href='javascript:void(0)'>用户管理</a></li>
-					<li><a data-href='listRolePage' data-title='角色管理' href='javascript:void(0)'>角色管理</a></li>
-					<li><a data-href='listPermissionPage' data-title='权限管理' href='javascript:void(0)'>权限管理</a></li>
-			</ul>
+				<ul>" escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+					<c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="用户管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="<li><a data-href='listUserPage' data-title='用户管理' href='javascript:void(0)'>用户管理</a></li>" escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+					<c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="角色管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="<li><a data-href='listRolePage' data-title='角色管理' href='javascript:void(0)'>角色管理</a></li>" escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+					<c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="权限管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="<li><a data-href='listPermissionPage' data-title='权限管理' href='javascript:void(0)'>权限管理</a></li>" escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+			<c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="操作员及权限管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="</ul>
 		</dd>
 	</dl>" escapeXml="false" default="默认值"></c:out>
            </c:if>
@@ -106,10 +126,26 @@
                <dl id='menu-product'>
 			<dt><i class='Hui-iconfont'>&#xe620;</i> 企业相册管理    <i class='Hui-iconfont menu_dropdown-arrow'>&#xe6d5;</i></dt>
 			<dd>
-				<ul>
-				<li><a data-href='listPhotoPage' data-title='相册内容管理' href='javascript:void(0)'>相册内容管理</a></li>
-				<li><a data-href='listPhotoTypePage' data-title='相册类型管理' href='javascript:void(0)'>相册类型管理</a></li>
-			</ul>
+			<ul>" escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+ <c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="相册内容管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="
+				<li><a data-href='listPhotoPage' data-title='相册内容管理' href='javascript:void(0)'>相册内容管理</a></li>" escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+				<c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="相册内容管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="<li><a data-href='listPhotoTypePage' data-title='相册类型管理' href='javascript:void(0)'>相册类型管理</a></li>" escapeXml="false" default="默认值"></c:out>
+           </c:if>
+       </c:forEach>
+			<c:forEach items="${userPermissions}" var="up">
+       		<c:set var = "P1" value="企业相册管理"/> 
+           <c:if test="${up.name eq P1}">
+               <c:out value="</ul>
 		</dd>
 	</dl>
                " escapeXml="false" default="默认值"></c:out>
