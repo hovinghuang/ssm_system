@@ -40,23 +40,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- <input type="text" value="" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="key" name="key"><button type="submit" href="javascript:;" onclick="user_search('关键字查找用户','config/searchUserByKeyPage','1000','530')" class="btn btn-success" id="" name=""><i class="icon-search"></i> 搜用户</button>
  -->
   </div>
-  <div class="cl pd-5 bg-1 bk-gray mt-20">
+  <br>
+  <div class="panel panel-default">
+  <div class="panel-header" style="height:28px;" >
     <span class="l"><a href="javascript:;" onclick="users_del()" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a>
     <!-- <a href="javascript:;" onclick="user_add('添加用户','config/addUserPage','550','530')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加用户</a></span> -->
     <%-- <span class="r">共有数据：<strong>${amount}</strong> 条</span> --%>
   </div>
-  <table class="table table-border table-bordered table-hover table-bg table-sort">
+  <table class="table table-border table-hover table-striped table-sort">
     <thead>
-      <tr class="text-c">
+      <tr class="text-l">
         <th width="25"><input type="checkbox" name="" value=""></th>
-        <th width="80">ID</th>
+        <th width="50">ID</th>
         <th width="100">用户名</th>
         <th width="100">姓名</th>
         <!-- <th width="100">角色</th> -->
-        <th width="40">性别</th>
+        <th width="20">性别</th>
         <th width="90">手机</th>
         <th width="150">邮箱</th>
-        <th width="">地址</th>
+        <th width="150">地址</th>
         <th width="130">加入时间</th>
         <th width="100">操作</th>
       </tr>
@@ -64,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <tbody>
      </tbody>
   </table>
-<!--   <div id="pageNav" class="pageNav"></div> -->
+  </div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>

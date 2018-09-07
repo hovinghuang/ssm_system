@@ -103,6 +103,7 @@ option:hover{
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script src="lib/fileinput/js/bootstrap.min.js"></script>
 <script src="lib/fileinput/js/fileinput.min.js" type="text/javascript"></script>
 <script src="lib/fileinput/js/zh.js" type="text/javascript"></script>   
 

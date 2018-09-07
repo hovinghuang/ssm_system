@@ -36,12 +36,11 @@
     <!--  <mvc:default-servlet-handler /> -->
    
     <!-- 资源映射 -->
-    <mvc:resources location="/static/" mapping="/config/static/**"/>
-    <mvc:resources location="/lib/" mapping="/config/lib/**"/>
     <mvc:resources location="/static/" mapping="/static/**"/>
     <mvc:resources location="/lib/" mapping="/lib/**"/>
     <mvc:resources location="/login/" mapping="/login/**"/>
     <mvc:resources location="/photo/" mapping="/photo/**"/>
+    <mvc:resources location="/ueditorimage/" mapping="/ueditorimage/**"/>
     
     <!-- 视图定位到/WEB/INF/jsp 这个目录下 -->
     <bean

@@ -40,14 +40,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- <input type="text" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="" name=""><button type="submit" class="btn btn-success" id="" name=""><i class="icon-search"></i> 搜用户</button> -->
 
   </div>
-  <div class="cl pd-5 bg-1 bk-gray mt-20">
+  <br>
+  <div class="panel panel-default">
+  <div class="panel-header" style="height:28px;" >
 <!--     <span class="l"><a href="javascript:;" onclick="users_del()" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a> -->
-    <a href="javascript:;" onclick="role_add('添加角色','addRolePage','550','530')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加角色</a></span>
+    <a href="javascript:;" onclick="role_add('添加角色','addRolePage','550','530')" class="btn btn-primary"><i class="icon-plus"></i> 添加角色</a></span>
     <%-- <span class="r">共有数据：<strong>${amount}</strong> 条</span> --%>
   </div>
-  <table class="table table-border table-bordered table-hover table-bg table-sort">
+  <table class="table table-border table-hover table-striped table-sort">
     <thead>
-      <tr class="text-c">
+      <tr class="text-l">
         <th width="80">ID</th>
         <th width="100">角色名称</th>
         <th width="100">角色描述</th>
@@ -58,6 +60,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <tbody>
      </tbody>
   </table>
+  </div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>

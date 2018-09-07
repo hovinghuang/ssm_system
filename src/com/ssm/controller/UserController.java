@@ -46,24 +46,6 @@ public class UserController {
 	public JSONObject listUserTable(String draw, String start, String length) {
 		int amount = userService.total();
 		List<User> us = userService.list();
-		// Map<String, String> user_roles = new HashMap<>();
-		//
-		// for (User user : us) {
-		// Role roles = roleService.get(user.getId());
-		// user_roles.put("id", String.valueOf(user.getId()));
-		// user_roles.put("name", user.getName());
-		// user_roles.put("password", user.getPassword());
-		// user_roles.put("realname", user.getRealname());
-		// user_roles.put("sex", String.valueOf(user.getSex()));
-		// user_roles.put("phone", user.getPhone());
-		// user_roles.put("email", user.getEmail());
-		// user_roles.put("address", user.getAddress());
-		// user_roles.put("entrytime", user.getEntrytime());
-		// }
-		//
-		// JSONObject json = new JSONObject();
-		// json.put("data", JSONObject.toJSON(user_roles));
-		// System.out.println("返回数据json：" + json.toJSONString());
 		// 获取Action的上下文，就是action的一些运行信息，环境等等
 		int mydraw = 0, mystart = 0, mylength = 0, mypage = 0;
 		// 获取前端的分页参数
@@ -71,9 +53,9 @@ public class UserController {
 		mystart = Integer.parseInt(start);
 		mylength = Integer.parseInt(length);
 		mypage = (mystart / mylength) + 1;
-		System.out.println("访问次数mydraw==" + mydraw);
-		System.out.println("起始下标mystart==" + mystart);
-		System.out.println("列表长度mylength==" + mylength);
+		// System.out.println("访问次数mydraw==" + mydraw);
+		// System.out.println("起始下标mystart==" + mystart);
+		// System.out.println("列表长度mylength==" + mylength);
 		// System.out.println("当前页数mypage==" + mypage);
 
 		List<User> pageList = new ArrayList<User>();
@@ -109,16 +91,12 @@ public class UserController {
 		List<Role> roles = roleService.listRoles(user);
 		model.addAttribute("currentRoles", roles);
 
-		// System.out.println("rs==" + rs);
-		// System.out.println("roles==" + roles);
-
 		return "user-edit";
 	}
 
 	@ResponseBody
 	@RequestMapping("editUser")
 	public String editUser(User user, long[] roleIds) {
-
 		String password = user.getPassword();
 		// 如果在修改的时候没有设置密码，就表示不改动密码
 		if (user.getPassword().length() != 0) {

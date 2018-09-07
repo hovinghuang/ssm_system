@@ -1,5 +1,6 @@
 package com.ssm.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,16 +23,48 @@ public class PermissionController {
 	PermissionService permissionService;
 
 	@RequestMapping("listPermissionPage")
-	public String listPermissionPage() {
+	public String listPermissionPage(Model model) {
+		// 用户列表的记录总数
+		int amount = permissionService.total();
+		model.addAttribute("amount", amount);
 		return "permission-list";
 	}
 
 	@ResponseBody
 	@RequestMapping("listPermissionTable")
-	public JSONObject listPermissionTable(Model model) {
-		List<Permission> ps = permissionService.list();
+	public JSONObject listPermissionTable(String draw, String start, String length) {
+		int amount = permissionService.total();
+		List<Permission> permissionList = permissionService.list();
+
+		// 获取Action的上下文，就是action的一些运行信息，环境等等
+		int mydraw = 0, mystart = 0, mylength = 0, mypage = 0;
+		// 获取前端的分页参数
+		mydraw = Integer.parseInt(draw);
+		mystart = Integer.parseInt(start);
+		mylength = Integer.parseInt(length);
+		mypage = (mystart / mylength) + 1;
+		// System.out.println("访问次数mydraw==" + mydraw);
+		// System.out.println("起始下标mystart==" + mystart);
+		// System.out.println("列表长度mylength==" + mylength);
+		// System.out.println("当前页数mypage==" + mypage);
+
+		List<Permission> pageList = new ArrayList<Permission>();
+		int mylen = 0;
+		if ((amount - (mypage - 1) * mylength) > 10) {
+			mylen = mylength;
+		} else {
+			mylen = amount - (mypage - 1) * mylength;
+		}
+		for (int i = 0; i < mylen; i++) {
+			pageList.add(permissionList.get(mystart + i));
+		}
 		Map<String, Object> info = new HashMap<String, Object>();
-		info.put("data", ps);
+		info.put("data", pageList);
+		info.put("draw", mydraw);
+		info.put("start", mystart);
+		info.put("length", mylength);
+		info.put("recordsTotal", amount);
+		info.put("recordsFiltered", amount);
 		String a = JSON.toJSONString(info);
 		JSONObject permission_table = JSONObject.parseObject(a);
 		return permission_table;
@@ -67,17 +100,6 @@ public class PermissionController {
 	public String addPermissionPage() {
 		return "permission-add";
 	}
-
-	/*
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping("getPermissionTree") public JSONObject
-	 * getPermissionTree() { List<Permission> ps = permissionService.list();
-	 * 
-	 * Map<String, Object> info = new HashMap<String, Object>();
-	 * info.put("data", ps); String a = JSON.toJSONString(info); JSONObject
-	 * permission_tree = JSONObject.parseObject(a); return permission_tree; }
-	 */
 
 	@ResponseBody
 	@RequestMapping("addPermission")

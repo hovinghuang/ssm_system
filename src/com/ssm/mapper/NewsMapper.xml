@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.NewsMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.pojo.News">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="newstype_id" jdbcType="INTEGER" property="newstype_id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="tpic_url" jdbcType="VARCHAR" property="tpic_url" />
+    <result column="newsabstract" jdbcType="VARCHAR" property="newsabstract" />
+    <result column="user_id" jdbcType="BIGINT" property="user_id" />
+    <result column="reading" jdbcType="INTEGER" property="reading" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+    <result column="cpic_url" jdbcType="VARCHAR" property="cpic_url" />
+    <result column="stick" jdbcType="INTEGER" property="stick" />
+    <result column="audit" jdbcType="INTEGER" property="audit" />
+  </resultMap>
+   <select id="searchNewsByKey" resultType="com.ssm.pojo.News"
+        parameterType="com.ssm.pojo.News">
+        SELECT * FROM t_news where title like CONCAT('%',#{key},'%')
+    </select>
+  <select id="total" resultType="int">
+            select count(*) from   t_news     
+        </select>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ssm.pojo.News">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, newstype_id, title, tpic_url, newsabstract, user_id, reading, status, createtime, 
+    cpic_url, stick, audit
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ssm.pojo.NewsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_news
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ssm.pojo.NewsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_news
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_news
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_news
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ssm.pojo.News" useGeneratedKeys="true">
+    insert into t_news (newstype_id, title, tpic_url, 
+      newsabstract, user_id, reading, 
+      status, createtime, cpic_url, 
+      stick, audit, content
+      )
+    values (#{newstype_id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{tpic_url,jdbcType=VARCHAR}, 
+      #{newsabstract,jdbcType=VARCHAR}, #{user_id,jdbcType=BIGINT}, #{reading,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, #{cpic_url,jdbcType=VARCHAR}, 
+      #{stick,jdbcType=INTEGER}, #{audit,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ssm.pojo.News" useGeneratedKeys="true">
+    insert into t_news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newstype_id != null">
+        newstype_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="tpic_url != null">
+        tpic_url,
+      </if>
+      <if test="newsabstract != null">
+        newsabstract,
+      </if>
+      <if test="user_id != null">
+        user_id,
+      </if>
+      <if test="reading != null">
+        reading,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="cpic_url != null">
+        cpic_url,
+      </if>
+      <if test="stick != null">
+        stick,
+      </if>
+      <if test="audit != null">
+        audit,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newstype_id != null">
+        #{newstype_id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tpic_url != null">
+        #{tpic_url,jdbcType=VARCHAR},
+      </if>
+      <if test="newsabstract != null">
+        #{newsabstract,jdbcType=VARCHAR},
+      </if>
+      <if test="user_id != null">
+        #{user_id,jdbcType=BIGINT},
+      </if>
+      <if test="reading != null">
+        #{reading,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="cpic_url != null">
+        #{cpic_url,jdbcType=VARCHAR},
+      </if>
+      <if test="stick != null">
+        #{stick,jdbcType=INTEGER},
+      </if>
+      <if test="audit != null">
+        #{audit,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.pojo.News">
+    update t_news
+    <set>
+      <if test="newstype_id != null">
+        newstype_id = #{newstype_id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tpic_url != null">
+        tpic_url = #{tpic_url,jdbcType=VARCHAR},
+      </if>
+      <if test="newsabstract != null">
+        newsabstract = #{newsabstract,jdbcType=VARCHAR},
+      </if>
+      <if test="user_id != null">
+        user_id = #{user_id,jdbcType=BIGINT},
+      </if>
+      <if test="reading != null">
+        reading = #{reading,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="cpic_url != null">
+        cpic_url = #{cpic_url,jdbcType=VARCHAR},
+      </if>
+      <if test="stick != null">
+        stick = #{stick,jdbcType=INTEGER},
+      </if>
+      <if test="audit != null">
+        audit = #{audit,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ssm.pojo.News">
+    update t_news
+    set newstype_id = #{newstype_id,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      tpic_url = #{tpic_url,jdbcType=VARCHAR},
+      newsabstract = #{newsabstract,jdbcType=VARCHAR},
+      user_id = #{user_id,jdbcType=BIGINT},
+      reading = #{reading,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      cpic_url = #{cpic_url,jdbcType=VARCHAR},
+      stick = #{stick,jdbcType=INTEGER},
+      audit = #{audit,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.pojo.News">
+    update t_news
+    set newstype_id = #{newstype_id,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      tpic_url = #{tpic_url,jdbcType=VARCHAR},
+      newsabstract = #{newsabstract,jdbcType=VARCHAR},
+      user_id = #{user_id,jdbcType=BIGINT},
+      reading = #{reading,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      cpic_url = #{cpic_url,jdbcType=VARCHAR},
+      stick = #{stick,jdbcType=INTEGER},
+      audit = #{audit,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

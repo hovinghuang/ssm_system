@@ -25,4 +25,6 @@ public interface PermissionService {
 
 	public Set<String> listPermissionURLs(String userName);
 
+	public int total();
+
 }

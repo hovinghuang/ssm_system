@@ -66,9 +66,9 @@ public class PhotoController {
 		mystart = Integer.parseInt(start);
 		mylength = Integer.parseInt(length);
 		mypage = (mystart / mylength) + 1;
-		System.out.println("访问次数mydraw==" + mydraw);
-		System.out.println("起始下标mystart==" + mystart);
-		System.out.println("列表长度mylength==" + mylength);
+		// System.out.println("访问次数mydraw==" + mydraw);
+		// System.out.println("起始下标mystart==" + mystart);
+		// System.out.println("列表长度mylength==" + mylength);
 		// System.out.println("当前页数mypage==" + mypage);
 
 		for (int i = 0; i < photoList.size(); i++) {

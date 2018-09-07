@@ -35,12 +35,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="pd-20">
   <div class="text-c"><!--  日期范围： -->
   </div>
-  <div class="cl pd-5 bg-1 bk-gray mt-20">
-    <a href="javascript:;" onclick="permission_add('添加权限','addPermissionPage','550','330')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加权限</a></span>
+  <br>
+  <div class="panel panel-default">
+  <div class="panel-header" style="height:28px;" >
+    <a href="javascript:;" onclick="permission_add('添加权限','addPermissionPage','550','330')" class="btn btn-primary"><i class="icon-plus"></i> 添加权限</a></span>
+    <span class="r">共有数据：<strong>${amount}</strong> 条</span>
   </div>
-  <table class="table table-border table-bordered table-hover table-bg table-sort">
+  <table class="table table-border table-hover table-striped table-sort">
     <thead>
-      <tr class="text-c">
+      <tr class="text-l">
         <th width="80">ID</th>
         <th width="100">权限名称</th>
         <th width="100">权限描述</th>
@@ -51,6 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <tbody>
      </tbody>
   </table>
+  </div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
@@ -67,10 +71,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 var table =$('.table-sort').dataTable({
     "bInfo": false,
     "searching": false,
-	"bPaginate": false ,//开启分页功能，如果不开启，将会全部显示
+	"bPaginate": true ,//开启分页功能，如果不开启，将会全部显示
     "iDisplayLength" : 10, //默认显示的记录数
 	"lengthChange": false, //是否允许用户自定义显示数量
-	/* "pagingType": "simple", */
 	"processing": true,
     "serverSide": true,
 	"ordering":false,
@@ -80,10 +83,8 @@ var table =$('.table-sort').dataTable({
         "dataType":"JSON",
     }, 
     "aoColumns": [
-			   /* {"data":"id"}, */
                {"data":"id"},
                {"data":"name"},
-              /*  {"data":"role"}, */
                {"data":"desc_"},
                {"data":"url"},
                {"data":"id"}

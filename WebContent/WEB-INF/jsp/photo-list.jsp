@@ -39,12 +39,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <input type="text" value="" class="input-text" style="width:250px" placeholder="输入相册名称、描述、用户、时间" id="key" name="key"><button type="submit" href="javascript:;" onclick="photo_search('关键字查找相册','searchPhotoByKeyPage','1000','800')" class="btn btn-success" id="sub" name=""><i class="icon-search"></i> 搜相册</button>
 
   </div>
-  <div class="cl pd-5 bg-1 bk-gray mt-20">
-    <span class="l"><a href="javascript:;" onclick="photos_del()" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a>
-    <a href="javascript:;" onclick="photo_add('添加相册','addPhotoPage','900','700')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加相册</a></span>
+  <br>
+  <div class="panel panel-default">
+  <div class="panel-header" style="height:28px;" >
+    <span class="l"><a href="javascript:;" onclick="photos_del()" class="btn btn-danger"><i class="icon-trash"></i> 批量删除</a>
+    <a href="javascript:;" onclick="photo_add('添加相册','addPhotoPage','900','700')" class="btn btn-primary"><i class="icon-plus"></i> 添加相册</a></span>
     <span class="r">共有数据：<strong>${amount}</strong> 条</span>
   </div>
-  <table class="table table-border table-bordered table-hover table-bg table-sort">
+  <table class="table table-border table-hover table-striped table-sort">
     <thead>
       <tr class="text-l">
         <th width="15"><input type="checkbox" name="" value=""></th>
@@ -60,6 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <tbody>
      </tbody>
   </table>
+  </div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>

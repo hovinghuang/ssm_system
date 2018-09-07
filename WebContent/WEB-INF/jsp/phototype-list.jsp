@@ -34,10 +34,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="pd-20">
   <div class="text-c">
   </div>
-  <div class="cl pd-5 bg-1 bk-gray mt-20">
-    <a href="javascript:;" onclick="phototype_add('添加类型','addPhotoTypePage','500','300')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加类型</a></span>
+  <br>
+  <div class="panel panel-default">
+  <div class="panel-header" style="height:28px;" >
+    <a href="javascript:;" onclick="phototype_add('添加类型','addPhotoTypePage','500','300')" class="btn btn-primary"><i class="icon-plus"></i> 添加类型</a></span>
   </div>
-  <table class="table table-border table-bordered table-hover table-bg table-sort">
+  <table class="table table-border table-hover table-striped table-sort">
     <thead>
       <tr class="text-l">
         <th width="80">ID</th>
@@ -49,6 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <tbody>
      </tbody>
   </table>
+  </div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>

@@ -131,4 +131,9 @@ public class PermissionServiceImpl implements PermissionService {
 		return result;
 	}
 
+	@Override
+	public int total() {
+		return permissionMapper.total();
+	}
+
 }

@@ -91,23 +91,6 @@ public class PageController {
 		}
 	}
 
-	// @RequiresPermissions("deleteOrder")
-	@RequestMapping("deleteOrder")
-	public String deleteOrder() {
-		return "deleteOrder";
-	}
-
-	// @RequiresRoles("productManager")
-	@RequestMapping("deleteProduct")
-	public String deleteProduct() {
-		return "deleteProduct";
-	}
-
-	@RequestMapping("listProduct")
-	public String listProduct() {
-		return "listProduct";
-	}
-
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		return "login";

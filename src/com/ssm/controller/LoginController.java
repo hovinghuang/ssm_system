@@ -46,13 +46,6 @@ public class LoginController {
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		String checkcode = request.getParameter("checkCode");
 
-		// 获取登录用户的权限
-		// Role userrole = roleService.get(user.getId());
-		// model.addAttribute("userrole", userrole);
-
-		// List<Permission> userps = permissionService.list();
-		// model.addAttribute("userps", userps);
-		// System.out.println("用户角色==" + userrole);
 		try {
 			// 先检查验证码
 			if (checkcode.equals("") || checkcode == null) {
@@ -81,9 +74,6 @@ public class LoginController {
 					for (Role ur : userrole) {
 						userPermissions = permissionService.list(ur);
 					}
-
-					System.out.println("用户角色==" + userrole);
-
 					session.setAttribute("userPermissions", userPermissions);
 					return "redirect:index";
 				}

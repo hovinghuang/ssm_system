@@ -36,33 +36,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <input type="text" value="" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
     -
     <input type="text" value="" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
-    <input type="text" value="" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="key" name="key"><button type="submit" href="javascript:;" onclick="user_search('关键字查找用户','searchUserByKeyPage','1000','700')" class="btn btn-success" id="sub" name=""><i class="icon-search"></i> 搜用户</button>
+    <input type="text" value="" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="key" name="key"><button type="submit" href="javascript:;" onclick="user_search('关键字查找用户','searchUserByKeyPage','1000','600')" class="btn btn-success" id="sub" name=""><i class="icon-search"></i> 搜用户</button>
 
   </div>
-  <div class="cl pd-5 bg-1 bk-gray mt-20">
-    <span class="l"><a href="javascript:;" onclick="users_del()" class="btn btn-danger radius"><i class="icon-trash"></i> 批量删除</a>
-    <a href="javascript:;" onclick="user_add('添加用户','addUserPage','550','550')" class="btn btn-primary radius"><i class="icon-plus"></i> 添加用户</a></span>
+  <br>
+  <div class="panel panel-default">
+  <div class="panel-header" style="height:28px;" >
+    <span class="l"><a href="javascript:;" onclick="users_del()" class="btn btn-danger"><i class="icon-trash"></i> 批量删除</a>
+    <a href="javascript:;" onclick="user_add('添加用户','addUserPage','550','550')" class="btn btn-primary"><i class="icon-plus"></i> 添加用户</a></span>
     <span class="r">共有数据：<strong>${amount}</strong> 条</span>
   </div>
-  <table class="table table-border table-bordered table-hover table-bg table-sort">
+  <table class="table table-border table-hover table-striped table-sort">
     <thead>
-      <tr class="text-c">
+      <tr class="text-l">
         <th width="25"><input type="checkbox" name="" value=""></th>
-        <th width="80">ID</th>
-        <th width="100">用户名</th>
+        <th width="25">ID</th>
+        <th width="80">用户名</th>
         <th width="100">姓名</th>
         <!-- <th width="100">角色</th> -->
         <th width="40">性别</th>
-        <th width="90">手机</th>
+        <th width="100">手机</th>
         <th width="150">邮箱</th>
-        <th width="">地址</th>
-        <th width="130">加入时间</th>
+        <th width="150">地址</th>
+        <th width="100">加入时间</th>
         <th width="100">操作</th>
       </tr>
     </thead>
     <tbody>
      </tbody>
   </table>
+  </div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
@@ -77,6 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 var table =$('.table-sort').dataTable({
+	"ordering": false, // 禁止排序
 	"searching": false,
 	"bStateSave": false,//状态保存
     "bInfo": false,
@@ -115,7 +119,7 @@ var table =$('.table-sort').dataTable({
     "aoColumnDefs": [
         { 
     	"bSortable": false, 
-    	"aTargets": [0,4,5,7,9] 
+    	"aTargets": [0,1,2,3,4,5,6,7,8,9] 
     	},{
         targets: 0,//指定第一列，从0开始，0表示第一列，1表示第二列……
         render: function(data, type, row, meta) {
@@ -137,7 +141,7 @@ var table =$('.table-sort').dataTable({
         	var e_url = "editUserPage?id="+ data;
         	var e_id = data;
         	var e_w = 550;  	
-        	var e_h = 570;
+        	var e_h = 590;
             return '<a title="编辑" href="javascript:;" onclick="user_edit('+'\''+e_title+'\''+','+'\''+e_url+'\''+','+'\''+e_id+'\''+','+'\''+e_w+'\''+','+'\''+e_h+'\''+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> '
             +'<a title="删除" href="javascript:;" onclick="user_del(this,'+data+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
         }

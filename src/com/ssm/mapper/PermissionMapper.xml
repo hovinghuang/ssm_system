@@ -8,6 +8,9 @@
     <result column="desc_" jdbcType="VARCHAR" property="desc_" />
     <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
+  <select id="total" resultType="int">
+            select count(*) from   t_permission     
+        </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

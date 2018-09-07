@@ -147,10 +147,6 @@ public class RoleController {
 		if (arr != null) {
 			permissionIds = (long[]) ConvertUtils.convert(arr, long.class);
 		}
-		/*
-		 * for (int i = 0; i < arr.length; i++) { System.out.println("arr[" + i
-		 * + "]=" + arr[i]); // permissionIds[i] = Long.parseLong(arr[i]); }
-		 */
 		try {
 			// 将拿到的角色插入数据库
 			roleService.add(role);
