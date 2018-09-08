@@ -59,12 +59,15 @@ public class NewsController {
 			String user_name = userService.get(n.getUser_id()).getName();
 			newsPlus.setUser_name(user_name);
 			newsPlus.setReading(n.getReading());
-			String status = (n.getStatus() == 0) ? "待发布" : "已发布";
+			String status = (n.getStatus() == 0) ? "<span class='label label-default radius'>待发布</span>"
+					: "<span class='label label-success radius'>已发布</span>";
 			newsPlus.setStatus(status);
 			newsPlus.setCreatetime(n.getCreatetime());
-			String stick = (n.getStick() == 0) ? "不置顶" : "置顶";
+			String stick = (n.getStick() == 0) ? "<span class='label label-default radius'>不置顶</span>"
+					: "<span class='label label-success radius'>置顶</span>";
 			newsPlus.setStick(stick);
-			String audit = (n.getAudit() == 0) ? "待审核" : "审核通过";
+			String audit = (n.getAudit() == 0) ? "<span class='label label-default radius'>待审核</span>"
+					: "<span class='label label-success radius'>审核通过</span>";
 			newsPlus.setAudit(audit);
 			newsPlus.setContent(n.getContent());
 			newsPlusList.add(newsPlus);
@@ -125,7 +128,6 @@ public class NewsController {
 		String dateNowStr = sdf.format(d);
 		News news = new News();
 		try {
-			// 将拿到的数据插入数据库
 			news.setTitle(title);
 			news.setNewstype_id(Integer.parseInt(newstype_id));
 			news.setTpic_url(null);
@@ -138,7 +140,7 @@ public class NewsController {
 			news.setStick(0);
 			news.setAudit(0);
 			news.setContent(content);
-
+			// 将拿到的数据插入数据库
 			newsService.add(news);
 			// 向前端返回操作成功的json信息
 			JSONObject json = new JSONObject();
@@ -221,4 +223,39 @@ public class NewsController {
 			return json.toJSONString();
 		}
 	}
+
+	@RequestMapping("showNewsPage")
+	public String showNewsPage(Model model, int id) {
+		List<NewsType> newsTypeList = newsTypeService.list();
+		model.addAttribute("newsTypeList", newsTypeList);
+		News news = newsService.get(id);
+		String user_name = userService.get(news.getUser_id()).getRealname();
+		model.addAttribute("user_name", user_name);
+		news.setReading(news.getReading() + 1);
+		model.addAttribute("news", news);
+		newsService.update(news);
+		return "news-show";
+	}
+
+	@ResponseBody
+	@RequestMapping("publishNews")
+	public String publishNews(int id) {
+		try {
+			News news = newsService.get(id);
+			// 设置为发布状态
+			news.setStatus(1);
+			// 保存数据
+			newsService.update(news);
+			// 向前端返回操作成功的json信息
+			JSONObject json = new JSONObject();
+			json.put("msg", "success");
+			return json.toJSONString();
+		} catch (Exception e) {
+			// 向前端返回操作失败的json信息
+			JSONObject json = new JSONObject();
+			json.put("msg", "error");
+			return json.toJSONString();
+		}
+	}
+
 }

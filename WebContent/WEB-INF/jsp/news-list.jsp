@@ -126,12 +126,17 @@ var table =$('.table-sort').dataTable({
         {
         targets: 9,
         render: function (data, type, row, meta) {
+        	var s_title = "预览文章";
+        	var s_url = "showNewsPage?id="+ data;
+        	var s_id = data;
         	var e_title = "编辑信息";
         	var e_url = "editNewsPage?id="+ data;
         	var e_id = data;
         	var e_w = 550;  	
         	var e_h = 570;
-            return '<a title="编辑" href="javascript:;" onclick="news_edit('+'\''+e_title+'\''+','+'\''+e_url+'\''+','+'\''+e_id+'\''+','+'\''+e_w+'\''+','+'\''+e_h+'\''+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> '
+            return '<a title="发布" href="javascript:;" onclick="news_publish(this,'+data+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe603;</i></a>'
+            +'<a title="预览" href="javascript:;" onclick="news_show('+'\''+s_title+'\''+','+'\''+s_url+'\''+','+'\''+s_id+'\''+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe725;</i></a>'
+            + '<a title="编辑" href="javascript:;" onclick="news_edit('+'\''+e_title+'\''+','+'\''+e_url+'\''+','+'\''+e_id+'\''+','+'\''+e_w+'\''+','+'\''+e_h+'\''+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> '
             +'<a title="删除" href="javascript:;" onclick="news_del(this,'+data+')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
         }
         } 
@@ -150,6 +155,38 @@ function news_search(title,url,w,h){
 /*信息-添加*/
 function news_add(title,url,w,h){
 	/* layer_show(title,url,w,h); */
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+/*信息-发布*/
+function news_publish(obj,id){
+	layer.confirm('确认要发布吗？',function(index){
+		$.ajax({
+			type: 'POST',
+			url: 'publishNews?id='+ id,
+			dataType: 'json',
+			success: function(data){//success指的是请求并成功返回信息
+				console.log(data.msg);
+				if(data.msg == 'success'){
+					layer.msg('发布成功!',{icon:1,time:1000});
+					setTimeout('window.location.reload()',300); //延迟0.3秒
+				}else{
+					layer.msg('发布失败!',{icon:1,time:1000});
+				}
+			},
+			error:function(data) {
+				console.log(data.msg);
+				layer.msg('请求失败!',{icon:1,time:1000});
+			},
+		});		
+	});
+}
+/*信息-预览*/
+function news_show(title,url,id){
 	var index = layer.open({
 		type: 2,
 		title: title,
