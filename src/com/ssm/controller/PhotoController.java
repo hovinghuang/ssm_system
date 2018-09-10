@@ -138,8 +138,11 @@ public class PhotoController {
 		String salt = new SecureRandomNumberGenerator().nextBytes().toString();
 		int times = 2;
 		String algorithmName = "md5";
+
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath:" + rootPath);
 		// 设置默认保存路径，设置当前时间
-		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+		String photo_url = rootPath + "photo";
 		String filename = name;
 		String uploadtime = dateNowStr;
 
@@ -180,10 +183,12 @@ public class PhotoController {
 
 	@ResponseBody
 	@RequestMapping("deletePhoto")
-	public String deletePhoto(Model model, long id) {
+	public String deletePhoto(HttpServletRequest request, Model model, long id) {
 		Photo photo = photoService.findPhotoById((int) id);
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath:" + rootPath);
 		// 设置默认保存路径，设置当前时间
-		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+		String photo_url = rootPath + "photo";
 		String filename = photo.getFilename();
 		String encodedfilename = filename;
 		String folderPath = photo_url + File.separator + encodedfilename;
@@ -218,9 +223,11 @@ public class PhotoController {
 
 	@ResponseBody
 	@RequestMapping("deletePhotos")
-	public String deletePhotos(Integer[] idArray) {
+	public String deletePhotos(HttpServletRequest request, Integer[] idArray) {
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath:" + rootPath);
 		// 设置默认保存路径，设置当前时间
-		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+		String photo_url = rootPath + "photo";
 
 		try {
 			// 遍历数组
@@ -259,10 +266,13 @@ public class PhotoController {
 
 	@ResponseBody
 	@RequestMapping("getEditPhoto")
-	public String getEditPhoto(Model model, int id) {
+	public String getEditPhoto(HttpServletRequest request, Model model, int id) {
 		Photo photo = photoService.findPhotoById(id);
 		String filename = photo.getFilename();
-		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath:" + rootPath);
+		// 设置默认保存路径，设置当前时间
+		String photo_url = rootPath + "photo";
 
 		String filePath = photo_url + File.separator + filename;
 		System.out.println("filePath:" + filePath);
@@ -296,12 +306,13 @@ public class PhotoController {
 
 	@ResponseBody
 	@RequestMapping("editDeletePhoto")
-	public String editDeletePhoto(Model model, int key, String photoname) {
+	public String editDeletePhoto(HttpServletRequest request, Model model, int key, String photoname) {
 		Photo photo = photoService.findPhotoById(key);
 		String filename = photo.getFilename();
-		/* String photoname = extra.get("photoname").toString(); */
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath:" + rootPath);
 		// 设置默认保存路径，设置当前时间
-		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+		String photo_url = rootPath + "photo";
 		String delphotoname = photo_url + File.separator + filename + File.separator + photoname;
 
 		try {
@@ -348,8 +359,10 @@ public class PhotoController {
 		String salt = new SecureRandomNumberGenerator().nextBytes().toString();
 		int times = 2;
 		String algorithmName = "md5";
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath:" + rootPath);
 		// 设置默认保存路径，设置当前时间
-		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+		String photo_url = rootPath + "photo";
 		String filename = name;
 		String uploadtime = dateNowStr;
 
@@ -402,10 +415,15 @@ public class PhotoController {
 
 	@ResponseBody
 	@RequestMapping("searchPhotoByKey")
-	public JSONObject searchPhotoByKey(String key) {
-		System.out.println("查找key：" + key);
+	public JSONObject searchPhotoByKey(String key, String datemin, String datemax) {
 		List<PhotoPlus> photoPlusList = new ArrayList<PhotoPlus>();
-		List<Photo> photoList = photoService.searchPhotoByKey(key);
+		System.out.println("查找datemin：" + datemin);
+		System.out.println("查找datemax：" + datemax);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("key", key);
+		map.put("endTime", datemax);
+		map.put("startTime", datemin);
+		List<Photo> photoList = photoService.findPhotoByTime(map);
 		for (Photo p : photoList) {
 			System.out.println("查找到的对象：" + p.getName());
 		}
@@ -433,10 +451,13 @@ public class PhotoController {
 
 	@RequestMapping(value = { "showPhotoPage" }, method = { RequestMethod.GET, RequestMethod.POST,
 			RequestMethod.OPTIONS })
-	public ModelAndView showPhotoPage(Model model, int id) {
+	public ModelAndView showPhotoPage(HttpServletRequest request, Model model, int id) {
 		Photo photo = photoService.findPhotoById(id);
 		String filename = photo.getFilename();
-		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath:" + rootPath);
+		// 设置默认保存路径，设置当前时间
+		String photo_url = rootPath + "photo";
 
 		String filePath = photo_url + File.separator + filename;
 		System.out.println("filePath:" + filePath);
@@ -462,7 +483,10 @@ public class PhotoController {
 	public void showPhoto(Model model, HttpServletRequest request, HttpServletResponse httpResponse, int id) {
 		Photo photo = photoService.findPhotoById(id);
 		String filename = photo.getFilename();
-		String photo_url = "D:\\Workspaces\\Eclipse For JavaEE\\ssm_system\\WebContent\\photo";// 这是绝对路径，项目部署到云端必须要修改
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath:" + rootPath);
+		// 设置默认保存路径，设置当前时间
+		String photo_url = rootPath + "photo";
 
 		String filePath = photo_url + File.separator + filename;
 		System.out.println("filePath:" + filePath);
@@ -498,4 +522,5 @@ public class PhotoController {
 			}
 		}
 	}
+
 }

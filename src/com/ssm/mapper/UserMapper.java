@@ -1,6 +1,7 @@
 package com.ssm.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssm.pojo.User;
 import com.ssm.pojo.UserExample;
@@ -25,4 +26,6 @@ public interface UserMapper {
 	List<User> searchUserByKey(String key);
 
 	User findUserByName(String name);
+
+	List<User> findUserByTime(Map map);
 }

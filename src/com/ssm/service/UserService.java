@@ -1,6 +1,7 @@
 package com.ssm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssm.pojo.User;
 
@@ -24,4 +25,6 @@ public interface UserService {
 	public List<User> searchUserByKey(String key);
 
 	public User findUserByName(String name);
+
+	public List<User> findUserByTime(Map map);
 }

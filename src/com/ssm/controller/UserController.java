@@ -216,9 +216,13 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("searchUserByKey")
 	public JSONObject searchUserByKey(String key, String datemin, String datemax) {
-		List<User> us = userService.searchUserByKey(key);
 		System.out.println("查找datemin：" + datemin);
 		System.out.println("查找datemax：" + datemax);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("key", key);
+		map.put("endTime", datemax);
+		map.put("startTime", datemin);
+		List<User> us = userService.findUserByTime(map);
 		for (User u : us) {
 			System.out.println("查找到的对象：" + u.getRealname());
 		}

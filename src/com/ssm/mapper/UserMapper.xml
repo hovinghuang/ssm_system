@@ -13,6 +13,20 @@
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="entrytime" jdbcType="VARCHAR" property="entrytime" />
   </resultMap>
+  <select id="findUserByTime" parameterType="java.util.HashMap" resultType="com.ssm.pojo.User">
+        SELECT * FROM t_user 
+		<where>
+		<if test="key!=null and key!=''">
+		name like CONCAT('%',#{key},'%')
+		</if>
+        <if test="startTime!=null and startTime!=''">
+        and entrytime &gt;= #{startTime}  
+        </if>
+        <if test="endTime!=null and endTime!=''">
+        and entrytime &lt;= #{endTime}
+        </if>
+       </where> 
+    </select>
   <select id="findUserByName" parameterType="int" resultType="com.ssm.pojo.User">
         SELECT * FROM t_user WHERE name = #{name}
     </select>

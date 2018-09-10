@@ -258,4 +258,54 @@ public class NewsController {
 		}
 	}
 
+	@RequestMapping("searchNewsByKeyPage")
+	public String searchNewsByKeyPage() {
+		return "news-search";
+	}
+
+	@ResponseBody
+	@RequestMapping("searchNewsByKey")
+	public JSONObject searchNewsByKey(String key, String datemin, String datemax) {
+		System.out.println("查找datemin：" + datemin);
+		System.out.println("查找datemax：" + datemax);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("key", key);
+		map.put("endTime", datemax);
+		map.put("startTime", datemin);
+		List<News> newsList = newsService.findNewsByTime(map);
+		for (News n : newsList) {
+			System.out.println("查找到的对象：" + n.getTitle());
+		}
+		List<NewsPlus> newsPlusList = new ArrayList<NewsPlus>();
+		for (int i = 0; i < newsList.size(); i++) {
+			NewsPlus newsPlus = new NewsPlus();
+			News n = newsList.get(i);
+			newsPlus.setId(n.getId());
+			String news_type = newsTypeService.findNewsTypeById(n.getNewstype_id()).getName();
+			newsPlus.setNews_type(news_type);
+			newsPlus.setTitle(n.getTitle());
+			newsPlus.setNewsabstract(n.getNewsabstract());
+			String user_name = userService.get(n.getUser_id()).getName();
+			newsPlus.setUser_name(user_name);
+			newsPlus.setReading(n.getReading());
+			String status = (n.getStatus() == 0) ? "<span class='label label-default radius'>待发布</span>"
+					: "<span class='label label-success radius'>已发布</span>";
+			newsPlus.setStatus(status);
+			newsPlus.setCreatetime(n.getCreatetime());
+			String stick = (n.getStick() == 0) ? "<span class='label label-default radius'>不置顶</span>"
+					: "<span class='label label-success radius'>置顶</span>";
+			newsPlus.setStick(stick);
+			String audit = (n.getAudit() == 0) ? "<span class='label label-default radius'>待审核</span>"
+					: "<span class='label label-success radius'>审核通过</span>";
+			newsPlus.setAudit(audit);
+			newsPlus.setContent(n.getContent());
+			newsPlusList.add(newsPlus);
+		}
+		Map<String, Object> info = new HashMap<String, Object>();
+		info.put("data", newsPlusList);
+		String a = JSON.toJSONString(info);
+		JSONObject news_table = JSONObject.parseObject(a);
+		return news_table;
+	}
+
 }

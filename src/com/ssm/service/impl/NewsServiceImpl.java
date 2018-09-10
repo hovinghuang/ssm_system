@@ -1,6 +1,7 @@
 package com.ssm.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,11 @@ public class NewsServiceImpl implements NewsService {
 	@Override
 	public List<News> searchNewsByKey(String key) {
 		return newsMapper.searchNewsByKey(key);
+	}
+
+	@Override
+	public List<News> findNewsByTime(Map map) {
+		return newsMapper.findNewsByTime(map);
 	}
 
 }

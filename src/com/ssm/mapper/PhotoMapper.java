@@ -1,6 +1,7 @@
 package com.ssm.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssm.pojo.Photo;
 import com.ssm.pojo.PhotoExample;
@@ -27,4 +28,6 @@ public interface PhotoMapper {
 	Photo findPhotoByName(String name);
 
 	Photo findPhotoById(int id);
+
+	List<Photo> findPhotoByTime(Map map);
 }

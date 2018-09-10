@@ -11,6 +11,20 @@
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="tid" jdbcType="INTEGER" property="tid" />
   </resultMap>
+  <select id="findPhotoByTime" parameterType="java.util.HashMap" resultType="com.ssm.pojo.Photo">
+        SELECT * FROM t_photo 
+		<where>
+		<if test="key!=null and key!=''">
+		name like CONCAT('%',#{key},'%')
+		</if>
+        <if test="startTime!=null and startTime!=''">
+        and uploadtime &gt;= #{startTime}  
+        </if>
+        <if test="endTime!=null and endTime!=''">
+        and uploadtime &lt;= #{endTime}
+        </if>
+       </where> 
+    </select>
   <select id="findPhotoById" parameterType="int" resultType="com.ssm.pojo.Photo">
         SELECT * FROM t_photo WHERE id = #{id}
     </select>

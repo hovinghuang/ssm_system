@@ -67,6 +67,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 var searchkey = parent.$("#key").val();
+var datemin = parent.$("#datemin").val();
+var datemax = parent.$("#datemax").val();
 var table =$('.table-sort').dataTable({
 	"searching": false,
 	"bStateSave": false,//状态保存
@@ -87,7 +89,7 @@ var table =$('.table-sort').dataTable({
 		    }
 		  },
 	"ajax": {
-        "url": "searchPhotoByKey?key="+searchkey,
+        "url": "searchPhotoByKey?key="+searchkey+"&datemin="+datemin+"&datemax="+datemax,
         "type": "POST",
         "dataType":"JSON",
     }, 

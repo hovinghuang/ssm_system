@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <input type="text" value="" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
     -
     <input type="text" value="" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
-    <input type="text" value="" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="key" name="key"><button type="submit" href="javascript:;" onclick="user_search('关键字查找用户','searchUserByKeyPage','1000','600')" class="btn btn-success" id="sub" name=""><i class="icon-search"></i> 搜用户</button>
+    <input type="text" value="" class="input-text" style="width:250px" placeholder="输入用户名" id="key" name="key"><button type="submit" href="javascript:;" onclick="user_search('关键字查找用户','searchUserByKeyPage','1000','600')" class="btn btn-success" id="sub" name=""><i class="icon-search"></i> 搜用户</button>
 
   </div>
   <br>
@@ -151,8 +151,7 @@ var table =$('.table-sort').dataTable({
 
 /*用户-查找*/
 function user_search(title,url,w,h){
-	if(($('#key').val()=='')){
-        /* alert('输入不为空'); */
+	if(($('#key').val()=='')&&($('#datemin').val()=='')&&($('#datemax').val()=='')){
         layer.msg('关键字不能为空!',{icon:1,time:1000});
     }else{
     	layer_show(title,url,w,h);

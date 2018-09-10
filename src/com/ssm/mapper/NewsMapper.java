@@ -1,6 +1,7 @@
 package com.ssm.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssm.pojo.News;
 import com.ssm.pojo.NewsExample;
@@ -27,4 +28,6 @@ public interface NewsMapper {
 	int total();
 
 	List<News> searchNewsByKey(String key);
+
+	List<News> findNewsByTime(Map map);
 }

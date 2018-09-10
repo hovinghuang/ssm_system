@@ -15,6 +15,20 @@
     <result column="stick" jdbcType="INTEGER" property="stick" />
     <result column="audit" jdbcType="INTEGER" property="audit" />
   </resultMap>
+  <select id="findNewsByTime" parameterType="java.util.HashMap" resultType="com.ssm.pojo.News">
+        SELECT * FROM t_news 
+		<where>
+		<if test="key!=null and key!=''">
+		title like CONCAT('%',#{key},'%')
+		</if>
+        <if test="startTime!=null and startTime!=''">
+        and createtime &gt;= #{startTime}  
+        </if>
+        <if test="endTime!=null and endTime!=''">
+        and createtime &lt;= #{endTime}
+        </if>
+       </where> 
+    </select>
    <select id="searchNewsByKey" resultType="com.ssm.pojo.News"
         parameterType="com.ssm.pojo.News">
         SELECT * FROM t_news where title like CONCAT('%',#{key},'%')

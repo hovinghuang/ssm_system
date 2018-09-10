@@ -1,6 +1,7 @@
 package com.ssm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssm.pojo.News;
 
@@ -19,5 +20,7 @@ public interface NewsService {
 	public int total();
 
 	public List<News> searchNewsByKey(String key);
+
+	public List<News> findNewsByTime(Map map);
 
 }

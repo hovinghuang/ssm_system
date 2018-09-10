@@ -1,6 +1,7 @@
 package com.ssm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssm.pojo.Photo;
 
@@ -20,5 +21,7 @@ public interface PhotoService {
 	public Photo findPhotoByName(String name);
 
 	public Photo findPhotoById(int id);
+
+	public List<Photo> findPhotoByTime(Map map);
 
 }

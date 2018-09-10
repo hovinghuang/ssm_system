@@ -1,6 +1,7 @@
 package com.ssm.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserByName(String name) {
 		return userMapper.findUserByName(name);
+	}
+
+	@Override
+	public List<User> findUserByTime(Map map) {
+		return userMapper.findUserByTime(map);
 	}
 
 }
