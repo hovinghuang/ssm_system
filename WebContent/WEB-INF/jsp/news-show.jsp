@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <div class="Hui-article">
 	<div class="row">
-		<div class="panel panel-default col-sm-8 col-md-offset-2"">
+		<div class="panel panel-default col-sm-8 col-md-offset-2">
 			<article class="cl pd-20">
 				<div class="page_title">
 					<h2>
@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</div>
 				<div>
 					<span class="l">日期：<strong>${news.createtime}</strong>&nbsp;&nbsp;&nbsp;&nbsp;上传者：<strong>${user_name}</strong></span>
-					<span class="r">浏览量：<strong>${news.reading}</strong></span>
+					<span class="r">&nbsp;&nbsp;&nbsp;&nbsp;浏览量：<strong>${news.reading}</strong></span><span class="r">点赞量：<strong>${like_total}</strong></span>
 				</div>
 				<!-- <hr> -->
 				<br>
@@ -46,6 +46,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					${news.content}
 				</div>
 			</article>
+			<br>
+			<div class="text-c">
+			    <input value="${like.id}" name="id" type="hidden" id="id">
+			    <input value="${like.status}" name="status" type="hidden" id="status">
+			    <input value="${news.id}" name="news_id" type="hidden" id="news_id">
+				<button id="picklike" class="btn btn-default size-L" type="button" onClick="pickLike();"><i class="icon-ok"></i><i class="Hui-iconfont">&#xe697;</i></button>
+			</div>
+			<br>
 		</div>
 		<div class="row">
 			<ul class="commentList col-sm-8 col-md-offset-2">
@@ -57,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        </div>
 			      </header>
 			      <div class="comment-body">
-			        <p><a href="#">@某人</a> 你是猴子派来的救兵吗？</p>
+			        <p><a href="">@某人</a> 你是猴子派来的救兵吗？</p>
 			      </div>
 			    </div>
 			  </li>
@@ -67,7 +75,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> -->
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> 
@@ -77,7 +86,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="lib/lightbox2/2.8.1/js/lightbox.min.js"></script> 
 <script type="text/javascript">
-
+$(function(){
+	var status = $("#status").val();
+	if(status==1){
+		$("#picklike").toggleClass("btn-primary");
+	}
+});
+function pickLike(){
+	var id = $("#id").val();
+	var status = $("#status").val();
+	var news_id = $("#news_id").val();
+	$.ajax({
+		type: 'POST',
+		url: 'pickLike?id='+ id+'&status='+ status+'&news_id='+ news_id,
+		dataType: 'json',
+        success:function(data) { //请求成功后处理函数。
+        	console.log(data.msg);
+			if(data.msg == 'success'){
+				$("#picklike").toggleClass("btn-primary");
+			}else{
+				layer.msg('提交失败!',{icon:1,time:2000});
+			}
+        },
+        error:function(data) {//请求失败处理函数  
+        	console.log(data.msg);
+			layer.msg('请求失败!稍等请重新提交',{icon:1,time:1000});
+        },
+    });
+}
 </script>
 </body>
 </html>

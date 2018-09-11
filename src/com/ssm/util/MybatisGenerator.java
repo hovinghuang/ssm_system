@@ -3,7 +3,7 @@ package com.ssm.util;
 public class MybatisGenerator {
 
 	// public static void main(String[] args) throws Exception {
-	// String today = "2018-09-06";
+	// String today = "2018-09-10";
 	//
 	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	// Date now = sdf.parse(today);

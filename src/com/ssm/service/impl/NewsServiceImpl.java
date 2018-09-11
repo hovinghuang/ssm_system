@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssm.mapper.LikeMapper;
 import com.ssm.mapper.NewsMapper;
+import com.ssm.pojo.Like;
 import com.ssm.pojo.News;
 import com.ssm.pojo.NewsExample;
 import com.ssm.service.NewsService;
@@ -17,6 +19,8 @@ import com.ssm.service.NewsService;
 public class NewsServiceImpl implements NewsService {
 	@Autowired
 	NewsMapper newsMapper;
+	@Autowired
+	LikeMapper likeMapper;
 
 	@Override
 	public List<News> list() {
@@ -61,6 +65,26 @@ public class NewsServiceImpl implements NewsService {
 	@Override
 	public List<News> findNewsByTime(Map map) {
 		return newsMapper.findNewsByTime(map);
+	}
+
+	@Override
+	public void addLike(Like like) {
+		likeMapper.insert(like);
+	}
+
+	@Override
+	public void updateLikeById(Like like) {
+		likeMapper.updateByPrimaryKey(like);
+	}
+
+	@Override
+	public Like getLike(Map map) {
+		return likeMapper.getLike(map);
+	}
+
+	@Override
+	public int likeTotal(int news_id) {
+		return likeMapper.total(news_id);
 	}
 
 }

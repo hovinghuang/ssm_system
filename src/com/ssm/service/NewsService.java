@@ -3,6 +3,7 @@ package com.ssm.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ssm.pojo.Like;
 import com.ssm.pojo.News;
 
 public interface NewsService {
@@ -22,5 +23,13 @@ public interface NewsService {
 	public List<News> searchNewsByKey(String key);
 
 	public List<News> findNewsByTime(Map map);
+
+	public Like getLike(Map map);
+
+	public void addLike(Like like);
+
+	public void updateLikeById(Like like);
+
+	public int likeTotal(int news_id);
 
 }

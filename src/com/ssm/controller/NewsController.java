@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ssm.pojo.Like;
 import com.ssm.pojo.News;
 import com.ssm.pojo.NewsPlus;
 import com.ssm.pojo.NewsType;
@@ -224,8 +225,10 @@ public class NewsController {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@RequestMapping("showNewsPage")
-	public String showNewsPage(Model model, int id) {
+	public String showNewsPage(Model model, int id, HttpSession session) {
+		long user_id = (long) session.getAttribute("userId");
 		List<NewsType> newsTypeList = newsTypeService.list();
 		model.addAttribute("newsTypeList", newsTypeList);
 		News news = newsService.get(id);
@@ -234,6 +237,24 @@ public class NewsController {
 		news.setReading(news.getReading() + 1);
 		model.addAttribute("news", news);
 		newsService.update(news);
+
+		int like_total = newsService.likeTotal(id);
+		model.addAttribute("like_total", like_total);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("news_id", id);
+		Like like1 = newsService.getLike(map);
+		if (like1 != null) {
+			model.addAttribute("like", like1);
+		} else {
+			Like like2 = new Like();
+			like2.setId(0);
+			like2.setNews_id(0);
+			like2.setUser_id((long) 0);
+			like2.setStatus(0);
+			model.addAttribute("like", like2);
+		}
+
 		return "news-show";
 	}
 
@@ -306,6 +327,46 @@ public class NewsController {
 		String a = JSON.toJSONString(info);
 		JSONObject news_table = JSONObject.parseObject(a);
 		return news_table;
+	}
+
+	@ResponseBody
+	@RequestMapping("pickLike")
+	public String pickLike(int id, int news_id, int status, HttpSession session) {
+		long user_id = (long) session.getAttribute("userId");
+		try {
+			// 如果数据库中没有数据
+			if ((status == 0) && (id == 0)) {
+				Like like = new Like();
+				like.setNews_id(news_id);
+				like.setUser_id(user_id);
+				like.setStatus(1);
+				// 提交编辑好的数据
+				newsService.addLike(like);
+			} else if ((id != 0) && (status == 1)) {
+				Like like = new Like();
+				like.setId(id);
+				like.setNews_id(news_id);
+				like.setUser_id(user_id);
+				like.setStatus(0);
+				newsService.updateLikeById(like);
+			} else {
+				Like like = new Like();
+				like.setId(id);
+				like.setNews_id(news_id);
+				like.setUser_id(user_id);
+				like.setStatus(1);
+				newsService.updateLikeById(like);
+			}
+			// 向前端返回操作成功的json信息
+			JSONObject json = new JSONObject();
+			json.put("msg", "success");
+			return json.toJSONString();
+		} catch (Exception e) {
+			// 向前端返回操作失败的json信息
+			JSONObject json = new JSONObject();
+			json.put("msg", "error");
+			return json.toJSONString();
+		}
 	}
 
 }

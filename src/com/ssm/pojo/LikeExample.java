@@ -223,6 +223,66 @@ public class LikeExample {
             addCriterion("user_id not between", value1, value2, "user_id");
             return (Criteria) this;
         }
+
+        public Criteria andNews_idIsNull() {
+            addCriterion("news_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idIsNotNull() {
+            addCriterion("news_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idEqualTo(Integer value) {
+            addCriterion("news_id =", value, "news_id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idNotEqualTo(Integer value) {
+            addCriterion("news_id <>", value, "news_id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idGreaterThan(Integer value) {
+            addCriterion("news_id >", value, "news_id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idGreaterThanOrEqualTo(Integer value) {
+            addCriterion("news_id >=", value, "news_id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idLessThan(Integer value) {
+            addCriterion("news_id <", value, "news_id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idLessThanOrEqualTo(Integer value) {
+            addCriterion("news_id <=", value, "news_id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idIn(List<Integer> values) {
+            addCriterion("news_id in", values, "news_id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idNotIn(List<Integer> values) {
+            addCriterion("news_id not in", values, "news_id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idBetween(Integer value1, Integer value2) {
+            addCriterion("news_id between", value1, value2, "news_id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNews_idNotBetween(Integer value1, Integer value2) {
+            addCriterion("news_id not between", value1, value2, "news_id");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
