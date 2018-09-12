@@ -3,6 +3,7 @@ package com.ssm.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ssm.pojo.Comment;
 import com.ssm.pojo.Like;
 import com.ssm.pojo.News;
 
@@ -31,5 +32,9 @@ public interface NewsService {
 	public void updateLikeById(Like like);
 
 	public int likeTotal(int news_id);
+
+	public void addComment(Comment comment);
+
+	public List<Comment> getComment(int news_id);
 
 }

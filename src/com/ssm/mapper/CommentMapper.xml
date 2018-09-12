@@ -8,6 +8,12 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="createtime" jdbcType="VARCHAR" property="createtime" />
   </resultMap>
+  <select id="getComment" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment
+    where news_id = #{news_id,jdbcType=INTEGER}
+  </select>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

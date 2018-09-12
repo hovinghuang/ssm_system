@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ssm.pojo.Comment;
+import com.ssm.pojo.CommentPlus;
 import com.ssm.pojo.Like;
 import com.ssm.pojo.News;
 import com.ssm.pojo.NewsPlus;
@@ -225,7 +227,6 @@ public class NewsController {
 		}
 	}
 
-	@SuppressWarnings("null")
 	@RequestMapping("showNewsPage")
 	public String showNewsPage(Model model, int id, HttpSession session) {
 		long user_id = (long) session.getAttribute("userId");
@@ -254,6 +255,22 @@ public class NewsController {
 			like2.setStatus(0);
 			model.addAttribute("like", like2);
 		}
+
+		List<Comment> commentList = newsService.getComment(id);
+		List<CommentPlus> commentPlusList = new ArrayList<CommentPlus>();
+		for (int i = 0; i < commentList.size(); i++) {
+			CommentPlus cp = new CommentPlus();
+			cp.setId(commentList.get(i).getId());
+			cp.setContent(commentList.get(i).getContent());
+			cp.setImg("static/h-ui.admin/images/touxiang.png");
+			String realname = userService.get(commentList.get(i).getUser_id()).getRealname();
+			cp.setReplyName(realname);
+			cp.setTime(commentList.get(i).getCreatetime());
+			commentPlusList.add(cp);
+		}
+		JSONObject json = new JSONObject();
+		// json.put("commentPlusList", commentPlusList);
+		model.addAttribute("commentPlusList", json.toJSONString(commentPlusList));
 
 		return "news-show";
 	}
@@ -357,6 +374,34 @@ public class NewsController {
 				like.setStatus(1);
 				newsService.updateLikeById(like);
 			}
+			// 向前端返回操作成功的json信息
+			JSONObject json = new JSONObject();
+			json.put("msg", "success");
+			return json.toJSONString();
+		} catch (Exception e) {
+			// 向前端返回操作失败的json信息
+			JSONObject json = new JSONObject();
+			json.put("msg", "error");
+			return json.toJSONString();
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping("pickComment")
+	public String pickComment(int news_id, String content, HttpSession session) {
+		// 获取当前时间
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String createtime = sdf.format(d);
+
+		long user_id = (long) session.getAttribute("userId");
+		Comment comment = new Comment();
+		try {
+			comment.setNews_id(news_id);
+			comment.setUser_id(user_id);
+			comment.setContent(content);
+			comment.setCreatetime(createtime);
+			newsService.addComment(comment);
 			// 向前端返回操作成功的json信息
 			JSONObject json = new JSONObject();
 			json.put("msg", "success");

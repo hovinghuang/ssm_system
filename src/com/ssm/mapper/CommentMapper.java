@@ -1,21 +1,24 @@
 package com.ssm.mapper;
 
-import com.ssm.pojo.Comment;
-import com.ssm.pojo.CommentExample;
 import java.util.List;
 
+import com.ssm.pojo.Comment;
+import com.ssm.pojo.CommentExample;
+
 public interface CommentMapper {
-    int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(Integer id);
 
-    int insert(Comment record);
+	int insert(Comment record);
 
-    int insertSelective(Comment record);
+	int insertSelective(Comment record);
 
-    List<Comment> selectByExample(CommentExample example);
+	List<Comment> selectByExample(CommentExample example);
 
-    Comment selectByPrimaryKey(Integer id);
+	Comment selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Comment record);
+	int updateByPrimaryKeySelective(Comment record);
 
-    int updateByPrimaryKey(Comment record);
+	int updateByPrimaryKey(Comment record);
+
+	List<Comment> getComment(int news_id);
 }

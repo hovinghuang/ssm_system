@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssm.mapper.CommentMapper;
 import com.ssm.mapper.LikeMapper;
 import com.ssm.mapper.NewsMapper;
+import com.ssm.pojo.Comment;
 import com.ssm.pojo.Like;
 import com.ssm.pojo.News;
 import com.ssm.pojo.NewsExample;
@@ -21,6 +23,8 @@ public class NewsServiceImpl implements NewsService {
 	NewsMapper newsMapper;
 	@Autowired
 	LikeMapper likeMapper;
+	@Autowired
+	CommentMapper commentMapper;
 
 	@Override
 	public List<News> list() {
@@ -85,6 +89,17 @@ public class NewsServiceImpl implements NewsService {
 	@Override
 	public int likeTotal(int news_id) {
 		return likeMapper.total(news_id);
+	}
+
+	@Override
+	public void addComment(Comment comment) {
+		commentMapper.insert(comment);
+
+	}
+
+	@Override
+	public List<Comment> getComment(int news_id) {
+		return commentMapper.getComment(news_id);
 	}
 
 }
